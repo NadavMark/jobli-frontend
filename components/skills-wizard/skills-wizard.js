@@ -47,6 +47,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  activeDotStyle: {
+    backgroundColor: '#FFAB73'
+  },
+  dotStyle: {
+    backgroundColor: 'black'
+  }
 });
 
 export default function SkillsWizard() {
@@ -115,6 +121,8 @@ export default function SkillsWizard() {
       showSkipButton={false}
       showNextButton={false}
       showDoneButton={false}
+      dotStyle={styles.dotStyle}
+      activeDotStyle={styles.activeDotStyle}
       onDone={_onDone}
     />
   )
