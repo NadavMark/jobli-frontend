@@ -2,30 +2,7 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
-
-const slides = [
-  {
-    key: 'one',
-    title: 'האם תרצי לעבוד בישיבה?',
-    text: 'Description.\nSay something cool',
-    image: require('../assets/images/skills/1.jpg'),
-    backgroundColor: '#59b2ab',
-  },
-  {
-    key: 'two',
-    title: 'Title 2',
-    text: 'Other cool stuff',
-    // image: require('./assets/2.jpg'),
-    backgroundColor: '#febe29',
-  },
-  {
-    key: 'three',
-    title: 'Rocket guy',
-    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
-    // image: require('./assets/3.jpg'),
-    backgroundColor: '#22bcb5',
-  }
-];
+import steps from './steps';
 
 const styles = StyleSheet.create({
   slide: {
@@ -92,6 +69,6 @@ export default SkillsWizard = () => {
     this.setState({ showRealApp: true });
   }
   return (
-    <AppIntroSlider renderItem={_renderItem} data={slides} showSkipButton={true} renderNextButton={_renderNextButton} renderSkipButton={_renderSkipButton} onDone={_onDone}/>
+    <AppIntroSlider renderItem={_renderItem} data={steps} showSkipButton={true} renderNextButton={_renderNextButton} renderSkipButton={_renderSkipButton} onDone={_onDone}/>
   )
 }
