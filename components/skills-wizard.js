@@ -6,9 +6,9 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 const slides = [
   {
     key: 'one',
-    title: 'Title 1',
+    title: 'האם תרצי לעבוד בישיבה?',
     text: 'Description.\nSay something cool',
-    // image: require('./assets/1.jpg'),
+    image: require('../assets/images/skills/1.jpg'),
     backgroundColor: '#59b2ab',
   },
   {
@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
   },
   image: {
-    width: 320,
+    width: '90%',
     height: 320,
     marginVertical: 32,
   },
@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
   },
   buttonCircle: {
     width: 40,
     height: 40,
-    backgroundColor: 'rgba(0, 0, 0, .2)',
+    backgroundColor: 'black',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -62,9 +62,8 @@ export default SkillsWizard = () => {
   const _renderItem = ({ item }) => {
     return (
       <View style={styles.slide}>
+        <Image style={styles.image} source={item.image} />
         <Text style={styles.title}>{item.title}</Text>
-        {/* <Image source={item.image} /> */}
-        <Text style={styles.text}>{item.text}</Text>
       </View>
     );
   }
