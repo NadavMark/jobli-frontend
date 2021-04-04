@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, Image, StyleSheet, StatusBar} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import steps from './steps';
@@ -36,39 +36,64 @@ const styles = StyleSheet.create({
 });
 
 export default SkillsWizard = () => {
-  const _renderItem = ({ item }) => {
+  const skillWizardRef = useRef();
+  const [answers, setAnswers] = useState([]);
+  
+  const onAnswerPressed = (index, answer)=> {
+    const currentStep = steps[index];
+    const { key } = currentStep;
+    let newAnswers = [...answers];
+    newAnswers[index] = {
+      key,
+      answer
+    };
+    setAnswers(newAnswers);
+    skillWizardRef.current.goToSlide(index+1, true);
+  }
+
+  const _renderItem = ({ item, index }) => {
     return (
       <View style={styles.slide}>
+        {<Text>{JSON.stringify(answers)}</Text>}
         <Image style={styles.image} source={item.image} />
         <Text style={styles.title}>{item.title}</Text>
+        <View style={styles.buttonCircle}>
+          <Icon
+            name="rocket"
+            color="rgba(255, 255, 255, .9)"
+            size={24}
+            onPress={() => onAnswerPressed(index, true)}
+          />
+        </View>
+        <View style={styles.buttonCircle}>
+          <Icon
+            name="rocket"
+            color="rgba(255, 255, 255, .9)"
+            size={24}
+            onPress={() => onAnswerPressed(index, false)}
+          />
+        </View>
+
+        
       </View>
     );
   }
-  const _renderNextButton = () => {
-    return (
-      <View style={styles.buttonCircle}>
-        <Icon
-          name="rocket"
-          color="rgba(255, 255, 255, .9)"
-          size={24}
-        />
-      </View>
-    );
-  };
-  const _renderSkipButton = () => (
-    <View style={styles.buttonCircle}>
-      <Icon
-        name="rocket"
-        color="rgba(255, 255, 255, .9)"
-        size={24} />
-    </View>
-  )
+  
+  
  const _onDone = () => {
     // User finished the introduction. Show real app through
     // navigation or simply by controlling state
     this.setState({ showRealApp: true });
   }
   return (
-    <AppIntroSlider renderItem={_renderItem} data={steps} showSkipButton={true} renderNextButton={_renderNextButton} renderSkipButton={_renderSkipButton} onDone={_onDone}/>
+    <AppIntroSlider 
+    ref={(ref) => (skillWizardRef.current = ref)}
+      renderItem={_renderItem} 
+      data={steps} 
+      showSkipButton={false}
+      showNextButton={false}
+      showDoneButton={false}
+      onDone={_onDone}
+    />
   )
 }
