@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
-
 import { Button } from 'react-native-elements';
-
-
 
 export default function HomeScreen({ navigation }) {
     return (
@@ -12,8 +9,7 @@ export default function HomeScreen({ navigation }) {
             <Button
                 title="Go To About"
                 onPress={() => navigation.navigate('About')}
-
             />
         </View>
-    );
+        );
 }
