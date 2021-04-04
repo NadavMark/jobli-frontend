@@ -5,6 +5,11 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import steps from './steps';
 
 const styles = StyleSheet.create({
+  answerContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
+  },
   slide: {
     flex: 1,
     alignItems: 'center',
@@ -28,7 +33,16 @@ const styles = StyleSheet.create({
   buttonCircle: {
     width: 40,
     height: 40,
-    backgroundColor: 'black',
+    backgroundColor: '#00C853',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cancelButtonCircle: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'red',
+    color: 'white',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -58,23 +72,30 @@ export default function SkillsWizard() {
         <Image style={styles.image} source={item.image} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>{item?.text}</Text>
-        <View style={styles.buttonCircle}>
-          <Icon
-            name="rocket"
-            color="rgba(255, 255, 255, .9)"
-            size={24}
-            onPress={() => onAnswerPressed(index, true)}
-          />
+        <View style={styles.answerContainer}>
+          <View style={{flex: 1, paddingLeft: 40}}>
+            <View style={styles.buttonCircle}>
+              <Icon
+                name='ios-checkmark'
+                type='ionicon'
+                color='white'
+                size={28}
+                onPress={() => onAnswerPressed(index, true)}
+              />
+            </View>
+          </View>
+          <View style={{flex: 0, paddingRight: 40}}>
+            <View style={styles.cancelButtonCircle}>
+              <Icon
+                name='close-outline'
+                type='ionicon'
+                color='white'
+                size={28}
+                onPress={() => onAnswerPressed(index, false)}
+              />
+            </View>
+          </View>
         </View>
-        <View style={styles.buttonCircle}>
-          <Icon
-            name="rocket"
-            color="rgba(255, 255, 255, .9)"
-            size={24}
-            onPress={() => onAnswerPressed(index, false)}
-          />
-        </View>
-
         
       </View>
     );
