@@ -78,12 +78,20 @@ export default SkillsWizard = () => {
       </View>
     );
   };
+  const _renderSkipButton = () => (
+    <View style={styles.buttonCircle}>
+      <Icon
+        name="rocket"
+        color="rgba(255, 255, 255, .9)"
+        size={24} />
+    </View>
+  )
  const _onDone = () => {
     // User finished the introduction. Show real app through
     // navigation or simply by controlling state
     this.setState({ showRealApp: true });
   }
   return (
-    <AppIntroSlider renderItem={_renderItem} data={slides} renderNextButton={_renderNextButton} onDone={_onDone}/>
+    <AppIntroSlider renderItem={_renderItem} data={slides} showSkipButton={true} renderNextButton={_renderNextButton} renderSkipButton={_renderSkipButton} onDone={_onDone}/>
   )
 }
