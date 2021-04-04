@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginVertical: 32,
   },
   text: {
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: 'black',
     textAlign: 'center',
   },
   title: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SkillsWizard = () => {
+export default function SkillsWizard() {
   const skillWizardRef = useRef();
   const [answers, setAnswers] = useState([]);
   
@@ -57,6 +57,7 @@ export default SkillsWizard = () => {
         {<Text>{JSON.stringify(answers)}</Text>}
         <Image style={styles.image} source={item.image} />
         <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.text}>{item?.text}</Text>
         <View style={styles.buttonCircle}>
           <Icon
             name="rocket"
