@@ -12,6 +12,8 @@ import { StyleSheet } from 'react-native';
 
 import SkillsSummary from './components/skills-wizard/skills-summary';
 import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
+import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';
+import PostJobWizard, { PostJobWizardScreenName, PostJobWizardScreenOptions } from './screens/post-job-wizard/post-job-wizard';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +41,8 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
+        <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
+        <Stack.Screen name={PostJobWizardScreenName} options={PostJobWizardScreenOptions} component={PostJobWizard} />
         <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
         <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />

@@ -11,41 +11,23 @@ const FormProfile = () => {
     return (
         <View>
             <InputText
-                label="שם מלא"
-            />
-            <Text style={styles.birthdayText}>תאריך לידה</Text>
-            <View style={styles.birthday}>
-                <InputText
-                    keyboardType="numeric"
-                    label="שנת"
-                    maxLength={4}
-                    wrapperStyle={{ width: '33.3%' }}
-                />
-                <InputText
-                    keyboardType="numeric"
-                    label="חודש"
-                    maxLength={2}
-                    wrapperStyle={{ width: '33.3%' }}
-                />
-                <InputText
-                    keyboardType="numeric"
-                    label="יום"
-                    maxLength={2}
-                    wrapperStyle={{ width: '33.3%' }}
-                />
-            </View>
-            <InputText
-                label="כתובת מגורים"
+                label="שם העסק"
             />
             <InputText
-                label="דואר אלקטרוני"
+                label="כתובת העסק"
+            />
+            <InputText
+                label="קישור לאתר העסק"
+            />
+            <InputText
+                label="תיאור העסק"
+                placeholder="כאן כדאי לרשום תיאור קצר של בית העסק"
             />
         </View>
     );
 };
 
-export default function CreateProfileSeeker({ navigation }) {
-    const [visible, setVisible] = React.useState(false);
+export default function CreateProfileEmployer({ navigation }) {
     return (
         <View accessible={true} style={styles.wrapper}>
             {/* <View style={styles.uploadProfileImageWrapper}>
@@ -56,7 +38,6 @@ export default function CreateProfileSeeker({ navigation }) {
             </View>
             <View style={styles.buttonWrapper}>
                 <Button
-                    onPress={() => setVisible(true)}
                     accessibilityLabel="המשך לשלב הבא"
                     buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
                     icon={
@@ -69,19 +50,6 @@ export default function CreateProfileSeeker({ navigation }) {
                 />
 
             </View>
-            <Overlay isVisible={visible} onBackdropPress={setVisible} overlayStyle={{ padding: 20, margin: 20 }}>
-                <Text style={styles.titlePopup}>על מנת שנכיר יוטר טוב</Text>
-                <Text style={styles.textPopup}>
-                    לפניך שאלון קצר.
-                    שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.
-                </Text>
-                <Button
-                    onPress={() => navigation.replace('SkillsQuestions')}
-                    accessibilityLabel="בואו נתחיל"
-                    title="בואו נתחיל"
-                    buttonStyle={{ backgroundColor: Theme.c3 }}
-                />
-            </Overlay>
         </View>
     );
 }
@@ -94,6 +62,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Theme.white,
+        alignItems: 'stretch'
     },
     formWrapper: {
         flex: 4,
@@ -135,8 +104,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export const CreateProfileSeekerScreenName = 'יצירת פרופיל מחפש עבודה';
-export const CreateProfileSeekerScreenOptions = {
+export const CreateProfileEmployerScreenName = 'יצירת פרופיל מעסיק';
+export const CreateProfileEmployerScreenOptions = {
     title: 'יצירת פרופיל',
     headerStyle: {
         backgroundColor: Theme.c1,
