@@ -14,6 +14,10 @@ export default function HomeScreen({ navigation }) {
                 title="Go To Skills Questions"
                 onPress={() => navigation.navigate('SkillsQuestions')}
             />
+            <Button
+                title="Go To Skills Questions Summary"
+                onPress={() => navigation.navigate('SkillsSummary')}
+            />
         </View>
         );
 }
