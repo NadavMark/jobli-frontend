@@ -8,7 +8,7 @@ import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen';
 import ChooseUserTypeScreen from './screens/ChooseUserTypeScreen';
 import { useFonts, Rubik_400Regular } from '@expo-google-fonts/rubik';
 import JobliLoader from './components/JobliLoader';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, I18nManager } from 'react-native';
 
 import SkillsSummary from './components/skills-wizard/skills-summary';
 import AddLanguageScreen from './screens/AddLanguageScreen';
@@ -32,6 +32,9 @@ const navTheme = {
 };
 
 function App() {
+  I18nManager.forceRTL(true);
+  I18nManager.allowRTL(true);
+
   let [fontsLoaded] = useFonts({
     Rubik_400Regular
   });
@@ -48,8 +51,8 @@ function App() {
         <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
         <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
-        <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'יצירת פרופיל' }}/>
-        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} options={{ title: 'יצירת פרופיל' }}/>
+        <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'יצירת פרופיל' }} />
+        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} options={{ title: 'יצירת פרופיל' }} />
       </Stack.Navigator>
     </NavigationContainer>);
 
@@ -57,6 +60,6 @@ function App() {
 
 export default App;
 
-const styles=StyleSheet.create({
-  
+const styles = StyleSheet.create({
+
 })
