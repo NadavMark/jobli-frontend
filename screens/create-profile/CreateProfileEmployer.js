@@ -28,7 +28,6 @@ const FormProfile = () => {
 };
 
 export default function CreateProfileEmployer({ navigation }) {
-    const [visible, setVisible] = React.useState(false);
     return (
         <View accessible={true} style={styles.wrapper}>
             {/* <View style={styles.uploadProfileImageWrapper}>
@@ -39,7 +38,6 @@ export default function CreateProfileEmployer({ navigation }) {
             </View>
             <View style={styles.buttonWrapper}>
                 <Button
-                    onPress={() => setVisible(true)}
                     accessibilityLabel="המשך לשלב הבא"
                     buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
                     icon={
@@ -52,19 +50,6 @@ export default function CreateProfileEmployer({ navigation }) {
                 />
 
             </View>
-            <Overlay isVisible={visible} onBackdropPress={setVisible} overlayStyle={{ padding: 20, margin: 20 }}>
-                <Text style={styles.titlePopup}>על מנת שנכיר יוטר טוב</Text>
-                <Text style={styles.textPopup}>
-                    לפניך שאלון קצר.
-                    שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.
-                </Text>
-                <Button
-                    onPress={() => navigation.replace('SkillsQuestions')}
-                    accessibilityLabel="בואו נתחיל"
-                    title="בואו נתחיל"
-                    buttonStyle={{ backgroundColor: Theme.c3 }}
-                />
-            </Overlay>
         </View>
     );
 }

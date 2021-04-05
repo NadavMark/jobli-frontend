@@ -14,13 +14,13 @@ export default function ChooseUserTypeScreen({ navigation }) {
                     buttonStyle={[styles.choosetypeBtn, styles.seekingForWorkBtnStyle, PRIMARY_BTN.BTN_STYLE]}
                     title="לחפש עבודה"
                     titleStyle={PRIMARY_BTN.TITLE_STYLE}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('יצירת פרופיל מחפש עבודה')}
                 />
                 <Button
                     buttonStyle={[styles.choosetypeBtn, styles.seekingForEmployeesBtnStyle, SECONDARY_BTN.BTN_STYLE]}
                     title="לחפש עובדים"
                     titleStyle={SECONDARY_BTN.TITLE_STYLE}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('יצירת פרופיל מעסיק')}
                 />
             </View>
 
