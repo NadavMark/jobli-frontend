@@ -61,10 +61,11 @@ export default function SkillsWizard({onDone}) {
   
   const onAnswerPressed = (index, answer)=> {
     const currentStep = steps[index];
-    const { key } = currentStep;
+    const { key, title: question } = currentStep;
     let newAnswers = [...answers];
     newAnswers[index] = {
       key,
+      question,
       answer
     };
     setAnswers(newAnswers);

@@ -14,6 +14,12 @@ export default function HomeScreen({ navigation }) {
                 title="Go To Skills Questions"
                 onPress={() => navigation.navigate('SkillsQuestions')}
             />
+
+            <Button
+                title="יצירת פרופיל"
+                onPress={() => navigation.navigate('יצירת פרופיל')}
+
+            />
         </View>
         );
 }
