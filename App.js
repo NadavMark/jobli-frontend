@@ -5,6 +5,11 @@ import Theme from './theme';
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
 import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen'
+import ChooseUserTypeScreen from './screens/ChooseUserTypeScreen';
+import { useFonts, Rubik_400Regular } from '@expo-google-fonts/rubik';
+import JobliLoader from './components/JobliLoader';
+import { StyleSheet } from 'react-native';
+
 import SkillsSummary from './components/skills-wizard/skills-summary';
 import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
 import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';
@@ -25,19 +30,29 @@ const navTheme = {
 };
 
 function App() {
-  return (
+  let [fontsLoaded] = useFonts({
+    Rubik_400Regular
+  });
+  if (!fontsLoaded) {
+    return <JobliLoader />
+  } else return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="ChooseUserTypeScreen">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
         <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
         <Stack.Screen name={PostJobWizardScreenName} options={PostJobWizardScreenOptions} component={PostJobWizard} />
         <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
       </Stack.Navigator>
-    </NavigationContainer>
-  );
+    </NavigationContainer>);
+
 }
 
 export default App;
+
+const styles=StyleSheet.create({
+  
+})
