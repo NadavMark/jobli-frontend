@@ -14,6 +14,12 @@ export default function HomeScreen({ navigation }) {
                 onPress={() => navigation.navigate('About')}
 
             />
+
+            <Button
+                title="יצירת פרופיל"
+                onPress={() => navigation.navigate('יצירת פרופיל')}
+
+            />
         </View>
     );
 }
