@@ -94,6 +94,7 @@ export default function CreateProfileSeeker({ navigation }) {
                     שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.
                 </Text>
                 <Button
+                    onPress={() => navigation.replace('SkillsQuestions')}
                     accessibilityLabel="בואו נתחיל"
                     title="בואו נתחיל"
                     buttonStyle={{ backgroundColor: Theme.c3 }}
