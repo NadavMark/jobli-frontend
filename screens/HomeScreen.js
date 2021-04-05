@@ -20,6 +20,16 @@ export default function HomeScreen({ navigation }) {
                 onPress={() => navigation.navigate('יצירת פרופיל')}
 
             />
+            <Button
+                title="יצירת פרופיל מעסיק"
+                onPress={() => navigation.navigate('יצירת פרופיל מעסיק')}
+
+            />
+            <Button
+                title="משרות לפרסום"
+                onPress={() => navigation.navigate('משרות לפרסום')}
+
+            />
         </View>
-        );
+    );
 }

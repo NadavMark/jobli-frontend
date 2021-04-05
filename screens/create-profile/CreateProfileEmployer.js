@@ -11,40 +11,23 @@ const FormProfile = () => {
     return (
         <View>
             <InputText
-                label="שם מלא"
-            />
-            <Text style={styles.birthdayText}>תאריך לידה</Text>
-            <View style={styles.birthday}>
-                <InputText
-                    keyboardType="numeric"
-                    label="שנת"
-                    maxLength={4}
-                    wrapperStyle={{ width: '33.3%' }}
-                />
-                <InputText
-                    keyboardType="numeric"
-                    label="חודש"
-                    maxLength={2}
-                    wrapperStyle={{ width: '33.3%' }}
-                />
-                <InputText
-                    keyboardType="numeric"
-                    label="יום"
-                    maxLength={2}
-                    wrapperStyle={{ width: '33.3%' }}
-                />
-            </View>
-            <InputText
-                label="כתובת מגורים"
+                label="שם העסק"
             />
             <InputText
-                label="דואר אלקטרוני"
+                label="כתובת העסק"
+            />
+            <InputText
+                label="קישור לאתר העסק"
+            />
+            <InputText
+                label="תיאור העסק"
+                placeholder="כאן כדאי לרשום תיאור קצר של בית העסק"
             />
         </View>
     );
 };
 
-export default function CreateProfileSeeker({ navigation }) {
+export default function CreateProfileEmployer({ navigation }) {
     const [visible, setVisible] = React.useState(false);
     return (
         <View accessible={true} style={styles.wrapper}>
@@ -94,6 +77,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Theme.white,
+        alignItems: 'stretch'
     },
     formWrapper: {
         flex: 4,
@@ -135,8 +119,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export const CreateProfileSeekerScreenName = 'יצירת פרופיל מחפש עבודה';
-export const CreateProfileSeekerScreenOptions = {
+export const CreateProfileEmployerScreenName = 'יצירת פרופיל מעסיק';
+export const CreateProfileEmployerScreenOptions = {
     title: 'יצירת פרופיל',
     headerStyle: {
         backgroundColor: Theme.c1,
