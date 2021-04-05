@@ -19,7 +19,7 @@ function App() {
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
-        <Stack.Screen name="AddLanguage" component={AddLanguageScreen} />
+        <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'יצירת פרופיל' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
