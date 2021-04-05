@@ -13,9 +13,9 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
+        <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
