@@ -62,7 +62,7 @@ const FormProfile = () => {
     );
 };
 
-export default function CreateProfile({ navigation }) {
+export default function CreateProfileSeeker({ navigation }) {
     const [visible, setVisible] = React.useState(false);
     return (
         <View accessible={true} style={styles.wrapper}>
@@ -163,9 +163,9 @@ const styles = StyleSheet.create({
     },
 });
 
-export const CreateProfileScreenName = 'יצירת פרופיל';
-export const CreateProfileScreenOptions = {
-    title: CreateProfileScreenName,
+export const CreateProfileSeekerScreenName = 'יצירת פרופיל';
+export const CreateProfileSeekerScreenOptions = {
+    title: CreateProfileSeekerScreenName,
     headerStyle: {
         backgroundColor: Theme.c1,
     },
