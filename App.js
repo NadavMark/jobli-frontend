@@ -11,6 +11,7 @@ import JobliLoader from './components/JobliLoader';
 import { StyleSheet } from 'react-native';
 
 import SkillsSummary from './components/skills-wizard/skills-summary';
+import AddLanguageScreen from './screens/AddLanguageScreen';
 import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
 import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';
 import PostJobWizard, { PostJobWizardScreenName, PostJobWizardScreenOptions } from './screens/post-job-wizard/post-job-wizard';
@@ -46,6 +47,7 @@ function App() {
         <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
         <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
+        <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'יצירת פרופיל' }}/>
       </Stack.Navigator>
     </NavigationContainer>);
 
