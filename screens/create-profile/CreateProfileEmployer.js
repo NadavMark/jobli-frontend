@@ -39,7 +39,6 @@ export default function CreateProfileEmployer({ navigation }) {
             <View style={styles.buttonWrapper}>
                 <Button
                     accessibilityLabel="המשך לשלב הבא"
-                    onPress={() => navigation.navigate('משרות לפרסום')}
                     buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
                     icon={
                         <Icon

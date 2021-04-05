@@ -14,6 +14,10 @@ export default function HomeScreen({ navigation }) {
                 title="Go To Skills Questions"
                 onPress={() => navigation.navigate('SkillsQuestions')}
             />
+            <Button
+                title="Go To Add Language"
+                onPress={() => navigation.navigate('AddLanguage')}
+            />
 
             <Button
                 title="יצירת פרופיל"
@@ -24,6 +28,15 @@ export default function HomeScreen({ navigation }) {
                 title="יצירת פרופיל מעסיק"
                 onPress={() => navigation.navigate('יצירת פרופיל מעסיק')}
 
+            />
+            <Button
+                title="משרות לפרסום"
+                onPress={() => navigation.navigate('משרות לפרסום')}
+
+            />
+            <Button
+                title="קצת עלי"
+                onPress={() => navigation.navigate('AboutMeProfile')}
             />
         </View>
     );

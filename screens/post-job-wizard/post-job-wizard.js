@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
+import { StyleSheet, Dimensions } from 'react-native';
 import Theme from '../../theme';
 import PostJobWizardInit from './init';
 
