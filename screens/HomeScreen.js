@@ -14,6 +14,10 @@ export default function HomeScreen({ navigation }) {
                 title="Go To Skills Questions"
                 onPress={() => navigation.navigate('SkillsQuestions')}
             />
+            <Button
+                title="Go To Add Language"
+                onPress={() => navigation.navigate('AddLanguage')}
+            />
         </View>
         );
 }
