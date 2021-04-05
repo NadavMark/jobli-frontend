@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function SkillsWizard() {
+export default function SkillsWizard({onDone}) {
   const skillWizardRef = useRef();
   const [answers, setAnswers] = useState([]);
   
@@ -68,13 +68,16 @@ export default function SkillsWizard() {
       answer
     };
     setAnswers(newAnswers);
-    skillWizardRef.current.goToSlide(index+1, true);
+    if(index === steps.length - 1) { // last page of steps
+      onDone(newAnswers);
+    } else {
+      skillWizardRef.current.goToSlide(index+1, true);
+    }
   }
 
   const _renderItem = ({ item, index }) => {
     return (
       <View style={styles.slide}>
-        {<Text>{JSON.stringify(answers)}</Text>}
         <Image style={styles.image} source={item.image} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>{item?.text}</Text>
