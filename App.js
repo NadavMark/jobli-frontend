@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Theme from './theme';
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
-import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen'
+import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen';
 import ChooseUserTypeScreen from './screens/ChooseUserTypeScreen';
 import { useFonts, Rubik_400Regular } from '@expo-google-fonts/rubik';
 import JobliLoader from './components/JobliLoader';
@@ -12,6 +12,7 @@ import { StyleSheet } from 'react-native';
 
 import SkillsSummary from './components/skills-wizard/skills-summary';
 import AddLanguageScreen from './screens/AddLanguageScreen';
+import AboutMeProfileScreen from './screens/AboutMeProfileScreen';
 import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
 import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';
 import PostJobWizard, { PostJobWizardScreenName, PostJobWizardScreenOptions } from './screens/post-job-wizard/post-job-wizard';
@@ -38,7 +39,7 @@ function App() {
     return <JobliLoader />
   } else return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator initialRouteName="ChooseUserTypeScreen">
+      <Stack.Navigator initialRouteName="AboutMeProfile">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
@@ -48,6 +49,7 @@ function App() {
         <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
         <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'יצירת פרופיל' }}/>
+        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} options={{ title: 'יצירת פרופיל' }}/>
       </Stack.Navigator>
     </NavigationContainer>);
 
