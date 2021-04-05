@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Theme from './theme';
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
+import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen'
+import SkillsSummary from './components/skills-wizard/skills-summary';
 import CreateProfile, { CreateProfileScreenName } from './screens/create-profile/CreateProfile';
 
 const Stack = createStackNavigator();
@@ -35,6 +37,8 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name={CreateProfileScreenName} options={screenOptions} component={CreateProfile} />
+        <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
+        <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
       </Stack.Navigator>
     </NavigationContainer>
   );
