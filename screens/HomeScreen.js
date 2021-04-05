@@ -18,6 +18,12 @@ export default function HomeScreen({ navigation }) {
                 title="Go To Add Language"
                 onPress={() => navigation.navigate('AddLanguage')}
             />
+
+            <Button
+                title="יצירת פרופיל"
+                onPress={() => navigation.navigate('יצירת פרופיל')}
+
+            />
         </View>
         );
 }
