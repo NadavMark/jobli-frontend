@@ -53,6 +53,6 @@ function App() {
 
 export default App;
 
-const styles=StyleSheet.create({
-  
+const styles = StyleSheet.create({
+
 })

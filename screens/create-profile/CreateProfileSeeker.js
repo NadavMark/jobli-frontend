@@ -70,7 +70,7 @@ export default function CreateProfileSeeker({ navigation }) {
 
             </View>
             <Overlay isVisible={visible} onBackdropPress={setVisible} overlayStyle={{ padding: 20, margin: 20 }}>
-                <Text style={styles.titlePopup}>על מנת שנכיר יוטר טוב</Text>
+                <Text style={styles.titlePopup}>על מנת שנכיר יותר טוב</Text>
                 <Text style={styles.textPopup}>
                     לפניך שאלון קצר.
                     שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.

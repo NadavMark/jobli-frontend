@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { View, TouchableOpacity, Dimensions, Text, StyleSheet } from 'react-native';
+import { View, Dimensions, StyleSheet } from 'react-native';
 import Theme from '../../theme';
 import InputText from '../../components/input-text';
 import UploadProfileImage from './UploadProfileImage';
-import { Icon, Button, Overlay } from 'react-native-elements';
+import { Icon, Button } from 'react-native-elements';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -39,6 +39,7 @@ export default function CreateProfileEmployer({ navigation }) {
             <View style={styles.buttonWrapper}>
                 <Button
                     accessibilityLabel="המשך לשלב הבא"
+                    onPress={() => navigation.navigate('משרות לפרסום')}
                     buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
                     icon={
                         <Icon

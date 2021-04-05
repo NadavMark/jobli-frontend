@@ -1,17 +1,31 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
+import { Icon, Button, Input } from 'react-native-elements';
 import Theme from '../../theme';
-import PostJobWizardInit from './init';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-export default function PostJobWizard({ navigation }) {
-    const [state, setState] = React.useState('init');
-    if (state === 'init') {
-        return <PostJobWizardInit setState={setState} />
-    }
+export default function PostJobWizardInit({ navigation }) {
+    return (
+        <View accessible={true} style={styles.wrapper}>
+            <Text style={styles.title}>הוסף תפקיד</Text>
+            <Input onSubmitEditing />
+            <View accessible={true} style={styles.buttonsWrapper}>
+                <Button
+                    accessibilityLabel="המשך לשלב הבא"
+                    buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64, alignSelf: 'flex-start' }}
+                    icon={
+                        <Icon
+                            name="arrow-back"
+                            size={30}
+                            color={Theme.white}
+                        />
+                    }
+                />
+            </View>
+        </View>
+    );
 }
 
 
@@ -53,12 +67,3 @@ const styles = StyleSheet.create({
         marginLeft: screenWidth - 170
     }
 });
-
-export const PostJobWizardScreenName = 'משרות לפרסום';
-export const PostJobWizardScreenOptions = {
-    title: PostJobWizardScreenName,
-    headerStyle: {
-        backgroundColor: Theme.c1,
-    },
-    headerTintColor: Theme.textColor
-}
