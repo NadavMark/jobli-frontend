@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Linking, Platform, Text, View } from 'react-native';
+import { Button, Platform, Text, View } from 'react-native';
+import { Linking } from 'expo'
 import * as WebBrowser from 'expo-web-browser';
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import awsconfig from './aws-exports';
@@ -16,13 +17,28 @@ async function urlOpener(url, redirectUrl) {
   }
 }
 
+debugger
+const expoScheme = "jobli://"
+// Technically you need to pass the correct redirectUrl to the web browser.
+let redirectUrl = Linking.makeUrl();
+if (redirectUrl.startsWith('exp://1')) {
+  // handle simulator(localhost) and device(Lan)
+  redirectUrl = redirectUrl + '/--/';
+} else
+if (redirectUrl === expoScheme) {
+  // dont do anything
+} else {
+  // handle the expo client
+  redirectUrl = redirectUrl + '/'
+}
+
 Amplify.configure({
   ...awsconfig,
   oauth: {
     ...awsconfig.oauth,
     urlOpener,
     scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-    redirectSignIn: 'exp://localhost:19000',
+    redirectSignIn: redirectUrl,
     responseType: 'code'
   },
 });
@@ -63,7 +79,7 @@ function App() {
       ) : (
         <Button title="Federated Sign In" onPress={() => {
           debugger;
-          Auth.federatedSignIn({provider: 'Google'})
+          Auth.federatedSignIn()
         }} />
       )}
     </View>
