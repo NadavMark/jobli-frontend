@@ -38,6 +38,10 @@ export default function HomeScreen({ navigation }) {
                 title="קצת עלי"
                 onPress={() => navigation.navigate('AboutMeProfile')}
             />
+             <Button
+                title="סיכום"
+                onPress={() => navigation.navigate('Summary')}
+            />
         </View>
     );
 }

@@ -16,6 +16,7 @@ import AboutMeProfileScreen from './screens/AboutMeProfileScreen';
 import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
 import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';
 import PostJobWizard, { PostJobWizardScreenName, PostJobWizardScreenOptions } from './screens/post-job-wizard/post-job-wizard';
+import SummaryScreen from './screens/SummaryScreen';
 
 const Stack = createStackNavigator();
 
@@ -42,7 +43,7 @@ function App() {
     return <JobliLoader />
   } else return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator initialRouteName="ChooseUserTypeScreen">
+      <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
@@ -53,6 +54,7 @@ function App() {
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
         <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'יצירת פרופיל' }} />
         <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} options={{ title: 'יצירת פרופיל' }} />
+        <Stack.Screen name="Summary" component={SummaryScreen} options={{ title: 'סיכום' }} />
       </Stack.Navigator>
     </NavigationContainer>);
 
