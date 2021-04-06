@@ -2,17 +2,23 @@ import * as React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import Theme from '../../theme';
 import PostJobWizardInit from './init';
+import PostJobWizardStep1 from './step-1';
+import PostJobWizardStep2 from './step-2';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 export default function PostJobWizard({ navigation }) {
-    const [state, setState] = React.useState('init');
-    if (state === 'init') {
-        return <PostJobWizardInit setState={setState} />
+    const [state, setState] = React.useState('INIT');
+    switch (state) {
+        case 'INIT':
+            return <PostJobWizardInit next={() => setState('STEP_1')} />
+        case 'STEP_1':
+            return <PostJobWizardStep1 next={() => setState('STEP_2')} />
+        case 'STEP_2':
+            return <PostJobWizardStep2 next={() => setState('STEP_3')} />
     }
 }
-
 
 const styles = StyleSheet.create({
     wrapper: {
