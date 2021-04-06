@@ -61,9 +61,14 @@ export default SkillsSummary = ({navigation, route}) => {
     );
   }
 
-  const onApply = () => {
-    alert(JSON.stringify(answers));
-    // const res = await post('https://nj11xg4loc.execute-api.us-east-1.amazonaws.com/prod/jobli', answers);
+  const onApply = async () => {
+    try{
+      alert(JSON.stringify(answers));
+      const res = await post('https://b1f38ixvz0.execute-api.us-east-1.amazonaws.com/prod/api/seekers/11111/answers', answers);
+      alert('success')
+    } catch (e) {
+      alert('error = ', JSON.stringify(e));
+    }
     // // TODO: navigate to Avisror screen
   }
 
