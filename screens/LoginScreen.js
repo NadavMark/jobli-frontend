@@ -9,10 +9,16 @@ export default function LoginScreen({ navigation }) {
     const [user, setUser] = useState(null);
 
     function getUser() {
+
+        Auth.currentUserInfo()
+            .then((userData) => console.log('>>>>>>>>>>>', userData))
+            .catch(() => console.log('Not signed in'));
+
+
         return Auth.currentAuthenticatedUser()
-          .then((userData) => userData)
-          .catch(() => console.log('Not signed in'));
-      }
+            .then((userData) => console.log(userData))
+            .catch(() => console.log('Not signed in'));
+    }
 
     useEffect(() => {
         Hub.listen('auth', ({ payload: { event, data } }) => {
