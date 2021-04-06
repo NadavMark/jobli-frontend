@@ -10,13 +10,20 @@ import { useFonts, Rubik_400Regular } from '@expo-google-fonts/rubik';
 import JobliLoader from './components/JobliLoader';
 import { StyleSheet, I18nManager } from 'react-native';
 
-import SkillsSummary from './components/skills-wizard/skills-summary';
+import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
+import Amplify, { Auth, Hub } from 'aws-amplify';
+import awsconfig from './aws-exports';
+
+
+
 import AddLanguageScreen from './screens/AddLanguageScreen';
 import AboutMeProfileScreen from './screens/AboutMeProfileScreen';
 import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
 import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';
 import PostJobWizard, { PostJobWizardScreenName, PostJobWizardScreenOptions } from './screens/post-job-wizard/post-job-wizard';
 import SummaryScreen from './screens/SummaryScreen';
+import LoginScreen from './screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +39,45 @@ const navTheme = {
   },
 };
 
+
+async function urlOpener(url, redirectUrl) {
+  const { type, url: newUrl } = await WebBrowser.openAuthSessionAsync(
+    url,
+    redirectUrl
+  );
+
+  if (type === 'success' && Platform.OS === 'ios') {
+    WebBrowser.dismissBrowser();
+    return Linking.openURL(newUrl);
+  }
+}
+
+const expoScheme = "jobli://"
+// Technically you need to pass the correct redirectUrl to the web browser.
+let redirectUrl = Linking.makeUrl();
+if (redirectUrl.startsWith('exp://1')) {
+  // handle simulator(localhost) and device(Lan)
+  redirectUrl = redirectUrl + '/--/';
+} else
+  if (redirectUrl === expoScheme) {
+    // dont do anything
+  } else {
+    // handle the expo client
+    redirectUrl = redirectUrl + '/'
+  }
+
+Amplify.configure({
+  ...awsconfig,
+  oauth: {
+    ...awsconfig.oauth,
+    urlOpener,
+    scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+    redirectSignIn: redirectUrl,
+    responseType: 'code'
+  },
+});
+
+
 function App() {
   I18nManager.forceRTL(true);
   I18nManager.allowRTL(true);
@@ -43,9 +89,10 @@ function App() {
     return <JobliLoader />
   } else return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator initialRouteName="ChooseUserTypeScreen">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
         <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
         <Stack.Screen name={PostJobWizardScreenName} options={PostJobWizardScreenOptions} component={PostJobWizard} />

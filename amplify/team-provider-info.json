@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-jobliclient-dev-215205-authRole",
+      "UnauthRoleArn": "arn:aws:iam::128812717278:role/amplify-jobliclient-dev-215205-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::128812717278:role/amplify-jobliclient-dev-215205-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-jobliclient-dev-215205-deployment",
+      "UnauthRoleName": "amplify-jobliclient-dev-215205-unauthRole",
+      "StackName": "amplify-jobliclient-dev-215205",
+      "StackId": "arn:aws:cloudformation:us-east-1:128812717278:stack/amplify-jobliclient-dev-215205/05d74740-9640-11eb-8673-0a8a0480d74d",
+      "AmplifyAppId": "d30s4pg7u6jt6z"
+    },
+    "categories": {
+      "auth": {
+        "jobliclient409c3620": {
+          "userPoolId": "us-east-1_wrxS5vVkt",
+          "userPoolName": "JobliMainAuthUsersPool3CE8BEDA-moqPtJNORpPO",
+          "webClientId": "7bupg3qvnjjr0ck3u8e9ksnn0d",
+          "nativeClientId": "7bupg3qvnjjr0ck3u8e9ksnn0d"
+        }
+      }
+    }
+  }
+}
