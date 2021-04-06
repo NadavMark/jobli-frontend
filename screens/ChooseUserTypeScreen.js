@@ -1,10 +1,24 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-
 import { Button } from 'react-native-elements';
 import { JOBLI_FONT, PRIMARY_BTN, SECONDARY_BTN } from '../assets/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ChooseUserTypeScreen({ navigation }) {
+
+    function navigateUserByType(userType) {
+        if (userType === 'seeker') {
+            navigation.replace('יצירת פרופיל מחפש עבודה');
+        } else if (userType === 'employer') {
+            navigation.navigate('יצירת פרופיל מעסיק');
+        }
+    }
+
+    React.useEffect(() => {
+        // AsyncStorage.clear()
+        AsyncStorage.getItem('user_type').then(navigateUserByType);
+    }, []);
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
             <Image style={styles.imageStyle} resizeMode="contain" source={require('./../assets/images/JobliLogo.png')} />
@@ -14,13 +28,21 @@ export default function ChooseUserTypeScreen({ navigation }) {
                     buttonStyle={[styles.choosetypeBtn, styles.seekingForWorkBtnStyle, PRIMARY_BTN.BTN_STYLE]}
                     title="לחפש עבודה"
                     titleStyle={PRIMARY_BTN.TITLE_STYLE}
-                    onPress={() => navigation.navigate('יצירת פרופיל מחפש עבודה')}
+                    onPress={() => {
+                        const userType = 'seeker';
+                        AsyncStorage.setItem('user_type', userType);
+                        navigateUserByType(userType)
+                    }}
                 />
                 <Button
                     buttonStyle={[styles.choosetypeBtn, styles.seekingForEmployeesBtnStyle, SECONDARY_BTN.BTN_STYLE]}
                     title="לחפש עובדים"
                     titleStyle={SECONDARY_BTN.TITLE_STYLE}
-                    onPress={() => navigation.navigate('יצירת פרופיל מעסיק')}
+                    onPress={() => {
+                        const userType = 'employer';
+                        AsyncStorage.setItem('user_type', userType);
+                        navigateUserByType(userType)
+                    }}
                 />
             </View>
 
@@ -35,7 +57,7 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: 22,
-        fontFamily: 'Rubik',
+        fontFamily: 'Rubik_400Regular',
         color: '#000000',
         marginBottom: 20,
     },

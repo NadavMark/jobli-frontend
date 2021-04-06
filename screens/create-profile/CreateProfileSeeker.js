@@ -93,11 +93,9 @@ export default function CreateProfileSeeker({ navigation }) {
     const [visible, setVisible] = React.useState(false);
     const [loading, setLoader] = React.useState(false);
 
-    const USER_ID = '11111'
-
     function submit(values) {
-        setLoader(true)
-        fetch(SEEKER_PROFILE_URL(USER_ID), {
+        setLoader(true);
+        fetch(EMPLOYERS, {
             method: 'PUT',
             body: JSON.stringify(values)
         }).then(res => res).then(res => {
