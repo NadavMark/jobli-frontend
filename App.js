@@ -1,9 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Platform, Text, View } from 'react-native';
-import { Linking } from 'expo'
+import * as React from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Theme from './theme';
+import HomeScreen from './screens/HomeScreen';
+import AboutScreen from './screens/AboutScreen';
+import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen';
+import ChooseUserTypeScreen from './screens/ChooseUserTypeScreen';
+import { useFonts, Rubik_400Regular } from '@expo-google-fonts/rubik';
+import JobliLoader from './components/JobliLoader';
+import { StyleSheet, I18nManager } from 'react-native';
+
+import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import awsconfig from './aws-exports';
+
+
+
+import AddLanguageScreen from './screens/AddLanguageScreen';
+import AboutMeProfileScreen from './screens/AboutMeProfileScreen';
+import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
+import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';
+import PostJobWizard, { PostJobWizardScreenName, PostJobWizardScreenOptions } from './screens/post-job-wizard/post-job-wizard';
+import LoginScreen from './screens/LoginScreen';
+
+const Stack = createStackNavigator();
+
+const navTheme = {
+  dark: false,
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: Theme.c1,
+    colors: Theme.textColor,
+    text: Theme.textColor,
+    border: Theme.c1
+  },
+};
+
 
 async function urlOpener(url, redirectUrl) {
   const { type, url: newUrl } = await WebBrowser.openAuthSessionAsync(
@@ -17,7 +51,6 @@ async function urlOpener(url, redirectUrl) {
   }
 }
 
-debugger
 const expoScheme = "jobli://"
 // Technically you need to pass the correct redirectUrl to the web browser.
 let redirectUrl = Linking.makeUrl();
@@ -43,47 +76,36 @@ Amplify.configure({
   },
 });
 
+
 function App() {
-  const [user, setUser] = useState(null);
+  I18nManager.forceRTL(true);
+  I18nManager.allowRTL(true);
 
-  useEffect(() => {
-    Hub.listen('auth', ({ payload: { event, data } }) => {
-      switch (event) {
-        case 'signIn':
-          getUser().then((userData) => setUser(userData));
-          break;
-        case 'signOut':
-          setUser(null);
-          break;
-        case 'signIn_failure':
-        case 'cognitoHostedUI_failure':
-          console.log('Sign in failure', data);
-          break;
-      }
-    });
+  let [fontsLoaded] = useFonts({
+    Rubik_400Regular
+  });
+  if (!fontsLoaded) {
+    return <JobliLoader />
+  } else return (
+    <NavigationContainer theme={navTheme}>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="About" component={AboutScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
+        <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
+        <Stack.Screen name={PostJobWizardScreenName} options={PostJobWizardScreenOptions} component={PostJobWizard} />
+        <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
+        <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'יצירת פרופיל' }} />
+        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} options={{ title: 'יצירת פרופיל' }} />
+      </Stack.Navigator>
+    </NavigationContainer>);
 
-    getUser().then((userData) => setUser(userData));
-  }, []);
-
-  function getUser() {
-    return Auth.currentAuthenticatedUser()
-      .then((userData) => userData)
-      .catch(() => console.log('Not signed in'));
-  }
-
-  return (
-    <View>
-      <Text>User: {user ? JSON.stringify(user.attributes) : 'None'}</Text>
-      {user ? (
-        <Button title="Sign Out" onPress={() => Auth.signOut()} />
-      ) : (
-        <Button title="Federated Sign In" onPress={() => {
-          debugger;
-          Auth.federatedSignIn()
-        }} />
-      )}
-    </View>
-  );
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+
+})
