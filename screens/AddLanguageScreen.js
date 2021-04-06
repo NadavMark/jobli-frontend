@@ -2,6 +2,8 @@ import React, {useState, useRef} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {SEEKER_LANGUAGES_URL} from '../constants';
+import {put} from '../services/api.service'
 
 const items = [{
   id: 'hebrew',
@@ -45,9 +47,20 @@ export default function AddLanguageScreen({ navigation }) {
 const [selectedItems, setSelectedItems] = useState([]);
 const multiSelectRef = useRef();
 
-onSelectedItemsChange = selectedItems => {
+const onSelectedItemsChange = selectedItems => {
   setSelectedItems(selectedItems)
 };
+
+const onApply = async (selectedItems) => {
+  try{
+    console.log(selectedItems);
+    const res = await put(SEEKER_LANGUAGES_URL, selectedItems);
+    navigation.replace('Summary')
+    console.log(res);
+  } catch (e) {
+    console.log(e)
+  }
+}
 
 return (
   <View style={{ flex: 1 , marginTop: 20}}>
@@ -80,7 +93,7 @@ return (
           type='ionicon'
           color='white'
           size={28}
-          onPress={() => {alert(JSON.stringify(selectedItems))}}
+          onPress={() => {onApply(selectedItems)}}
         />
     </View>
   </View>
