@@ -18,6 +18,7 @@ import awsconfig from './aws-exports';
 
 
 import AddLanguageScreen from './screens/AddLanguageScreen';
+import SkillsSummary from './components/skills-wizard/skills-summary';
 import AboutMeProfileScreen from './screens/AboutMeProfileScreen';
 import CreateProfileSeeker, { CreateProfileSeekerScreenName, CreateProfileSeekerScreenOptions } from './screens/create-profile/CreateProfileSeeker';
 import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEmployerScreenOptions } from './screens/create-profile/CreateProfileEmployer';

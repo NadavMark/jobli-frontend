@@ -7,6 +7,7 @@ import UploadProfileImage from './UploadProfileImage';
 import { Icon, Button, Overlay } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { put } from '../../services/api.service';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -95,13 +96,17 @@ export default function CreateProfileSeeker({ navigation }) {
 
     function submit(values) {
         setLoader(true);
-        fetch(EMPLOYERS, {
-            method: 'PUT',
-            body: JSON.stringify(values)
-        }).then(res => res).then(res => {
+        put(EMPLOYERS, values).then(async res => {
             setLoader(false)
             navigation.replace('SkillsQuestions')
-        });
+        })
+        // fetch(EMPLOYERS, {
+        //     method: 'PUT',
+        //     body: JSON.stringify(values)
+        // }).then(res => res).then(res => {
+        //     setLoader(false)
+        //     navigation.replace('SkillsQuestions')
+        // });
     }
 
     const initialValues = {

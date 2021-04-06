@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Dimensions, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import Theme from '../../theme';
 import { EMPLOYERS } from '../../constants';
+import { post } from '../../services/api.service';
 import InputText from '../../components/input-text';
 import UploadProfileImage from './UploadProfileImage';
 import { Icon, Button } from 'react-native-elements';
@@ -77,10 +78,7 @@ export default function CreateProfileEmployer({ navigation }) {
 
     function submit(values) {
         setLoader(true);
-        fetch(EMPLOYERS, {
-            method: 'POST',
-            body: JSON.stringify(values)
-        }).then(res => res.json()).then(async res => {
+        post(EMPLOYERS, values).then(async res => {
             await AsyncStorage.setItem(
                 'employer_id',
                 res.employer_id
@@ -91,6 +89,20 @@ export default function CreateProfileEmployer({ navigation }) {
             Alert.alert('', 'משהו קרה, נסה שנית!');
             setLoader(false);
         });
+        // fetch(EMPLOYERS, {
+        //     method: 'POST',
+        //     body: JSON.stringify(values)
+        // }).then(res => res.json()).then(async res => {
+        //     await AsyncStorage.setItem(
+        //         'employer_id',
+        //         res.employer_id
+        //     );
+        //     setLoader(false);
+        //     nextPage();
+        // }).catch(e => {
+        //     Alert.alert('', 'משהו קרה, נסה שנית!');
+        //     setLoader(false);
+        // });
     }
 
     React.useEffect(() => {

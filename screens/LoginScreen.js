@@ -1,22 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import Amplify, { Auth, Hub } from 'aws-amplify';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from 'react-native-elements';
 
 export default function LoginScreen({ navigation }) {
-
     const [user, setUser] = useState(null);
+
+
+    async function isAuthenticated() {
+        const user_id = await AsyncStorage.getItem('user_id')
+        const jwtToken = await AsyncStorage.getItem('jwtToken')
+        return jwtToken && user_id;
+    }
 
     function getUser() {
 
         Auth.currentUserInfo()
-            .then((userData) => console.log('>>>>>>>>>>>', userData))
+            .then(async (userData) => {
+                await AsyncStorage.setItem(
+                    'user_id',
+                    userData.attributes.sub
+                );
+            })
             .catch(() => console.log('Not signed in'));
 
-
         return Auth.currentAuthenticatedUser()
-            .then((userData) => console.log(userData))
+            .then(async (userData) => {
+                await AsyncStorage.setItem(
+                    'jwtToken',
+                    userData.signInUserSession.idToken.jwtToken
+                );
+            })
             .catch(() => console.log('Not signed in'));
     }
 
@@ -36,7 +51,13 @@ export default function LoginScreen({ navigation }) {
             }
         });
 
-        getUser().then((userData) => setUser(userData));
+        isAuthenticated().then(isAuth => {
+            if (!isAuth) {
+                getUser().then((userData) => setUser(userData));
+            } else {
+                navigation.navigate('ChooseUserTypeScreen');
+            }
+        })
     }, []);
 
     return (
