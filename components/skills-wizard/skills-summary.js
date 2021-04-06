@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, Button, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {post} from '../../services/api.service'
-
-const BASE_URL = 'https://b1f38ixvz0.execute-api.us-east-1.amazonaws.com/prod';
+import { SEEKER_PROFILE_ANSWERS_URL } from '../../constants'
 
 const styles = StyleSheet.create({
   container: {display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 5, fontSize: 20},
@@ -67,7 +66,8 @@ export default SkillsSummary = ({navigation, route}) => {
   const onApply = async () => {
     try{
       console.log(answers);
-      const res = await post(`${BASE_URL}/api/seekers/11111/answers`, answers);
+      const USER_ID = '11111'
+      const res = await post(SEEKER_PROFILE_ANSWERS_URL(USER_ID), answers);
       navigation.replace('AddLanguage')
       console.log(res);
     } catch (e) {
