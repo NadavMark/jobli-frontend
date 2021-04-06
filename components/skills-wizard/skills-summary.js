@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import { View, Text, Button, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {post} from '../../services/api.service'
+
+const BASE_URL = 'https://b1f38ixvz0.execute-api.us-east-1.amazonaws.com/prod';
 
 const styles = StyleSheet.create({
   container: {display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 5, fontSize: 20},
@@ -63,13 +66,13 @@ export default SkillsSummary = ({navigation, route}) => {
 
   const onApply = async () => {
     try{
-      alert(JSON.stringify(answers));
-      const res = await post('https://b1f38ixvz0.execute-api.us-east-1.amazonaws.com/prod/api/seekers/11111/answers', answers);
-      alert('success')
+      console.log(answers);
+      const res = await post(`${BASE_URL}/api/seekers/11111/answers`, answers);
+      navigation.replace('AddLanguage')
+      console.log(res);
     } catch (e) {
-      alert('error = ', JSON.stringify(e));
+      console.log(e)
     }
-    // // TODO: navigate to Avisror screen
   }
 
   return (
