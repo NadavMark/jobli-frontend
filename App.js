@@ -42,7 +42,7 @@ function App() {
     return <JobliLoader />
   } else return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator initialRouteName="AboutMeProfile">
+      <Stack.Navigator initialRouteName="ChooseUserTypeScreen">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
