@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, TouchableOpacity, Dimensions, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import Theme from '../../theme';
+import { SEEKER_PROFILE_URL } from '../../constants';
 import InputText from '../../components/input-text';
 import UploadProfileImage from './UploadProfileImage';
 import { Icon, Button, Overlay } from 'react-native-elements';
@@ -90,12 +91,17 @@ const FormProfile = ({ handleChange, handleBlur, values }) => {
 
 export default function CreateProfileSeeker({ navigation }) {
     const [visible, setVisible] = React.useState(false);
+    const [loading, setLoader] = React.useState(false);
+
+    const USER_ID = '11111'
 
     function submit(values) {
-        fetch(`https://b1f38ixvz0.execute-api.us-east-1.amazonaws.com/prod/api/seekers/11111/profile`, {
+        setLoader(true)
+        fetch(SEEKER_PROFILE_URL(USER_ID), {
             method: 'PUT',
             body: JSON.stringify(values)
         }).then(res => res).then(res => {
+            setLoader(false)
             navigation.replace('SkillsQuestions')
         });
     }
@@ -107,6 +113,16 @@ export default function CreateProfileSeeker({ navigation }) {
         birth_day: '',
         address: '',
         email: '',
+    }
+
+    if (loading) {
+        return (
+            <View style={{
+                flex: 1, justifyContent: "center"
+            }}>
+                <ActivityIndicator size="large" />
+            </View>
+        );
     }
 
     return (
@@ -127,7 +143,16 @@ export default function CreateProfileSeeker({ navigation }) {
                     </View>
                     <View style={styles.buttonWrapper}>
                         <Button
-                            onPress={() => setVisible(true)}
+                            onPress={() => {
+                                const { isValid, errors } = formikHelpers;
+                                if (!isValid) {
+                                    const firstErrorKey = Object.keys(errors)[0];
+                                    Alert.alert('', errors[firstErrorKey]);
+                                    setVisible(false)
+                                } else {
+                                    setVisible(true)
+                                }
+                            }}
                             accessibilityLabel="המשך לשלב הבא"
                             buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
                             icon={
@@ -147,16 +172,7 @@ export default function CreateProfileSeeker({ navigation }) {
                             שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.
                 </Text>
                         <Button
-                            onPress={() => {
-                                const { isValid, errors } = formikHelpers;
-                                if (!isValid) {
-                                    const firstErrorKey = Object.keys(errors)[0];
-                                    Alert.alert('', errors[firstErrorKey]);
-                                    setVisible(false)
-                                } else {
-                                    formikHelpers.handleSubmit();
-                                }
-                            }}
+                            onPress={formikHelpers.handleSubmit}
                             accessibilityLabel="בואו נתחיל"
                             title="בואו נתחיל"
                             buttonStyle={{ backgroundColor: Theme.c3 }}
