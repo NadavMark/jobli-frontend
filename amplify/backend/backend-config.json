@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "jobliclient409c3620": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

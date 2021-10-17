@@ -19,7 +19,7 @@ async function post(url, data, config) {
 }
 
 async function put(url, data, config) {
-  try{  
+  try {
     const response = await axios.put(url, data, config)
     return response;
   } catch (e) {
@@ -28,7 +28,7 @@ async function put(url, data, config) {
 }
 
 async function patch(url, params: any) {
-  try{  
+  try {
     const response = await axios.patch(url, data, config);
     return response;
   } catch (e) {
@@ -44,4 +44,4 @@ async function deleteMethod(url, config) {
   }
 }
 
-export {get,post, put, patch, deleteMethod};
+export { get, post, put, patch, deleteMethod };

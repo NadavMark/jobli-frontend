@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { View, TouchableOpacity, Dimensions, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import Theme from '../../theme';
-import { SEEKER_PROFILE_URL } from '../../constants';
+import { SEEKER_PROFILE_URL, EMPLOYERS } from '../../constants';
 import InputText from '../../components/input-text';
 import UploadProfileImage from './UploadProfileImage';
 import { Icon, Button, Overlay } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { put } from '../../services/api.service';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -93,17 +94,19 @@ export default function CreateProfileSeeker({ navigation }) {
     const [visible, setVisible] = React.useState(false);
     const [loading, setLoader] = React.useState(false);
 
-    const USER_ID = '11111'
-
     function submit(values) {
-        setLoader(true)
-        fetch(SEEKER_PROFILE_URL(USER_ID), {
-            method: 'PUT',
-            body: JSON.stringify(values)
-        }).then(res => res).then(res => {
+        setLoader(true);
+        put(EMPLOYERS, values).then(async res => {
             setLoader(false)
             navigation.replace('SkillsQuestions')
-        });
+        })
+        // fetch(EMPLOYERS, {
+        //     method: 'PUT',
+        //     body: JSON.stringify(values)
+        // }).then(res => res).then(res => {
+        //     setLoader(false)
+        //     navigation.replace('SkillsQuestions')
+        // });
     }
 
     const initialValues = {

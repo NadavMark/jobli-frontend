@@ -1,25 +1,66 @@
 import * as React from 'react';
-import { View, Dimensions, StyleSheet } from 'react-native';
+import { View, Dimensions, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import Theme from '../../theme';
+import { EMPLOYERS } from '../../constants';
+import { post } from '../../services/api.service';
 import InputText from '../../components/input-text';
 import UploadProfileImage from './UploadProfileImage';
 import { Icon, Button } from 'react-native-elements';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenWidth = Dimensions.get('window').width;
 
-const FormProfile = () => {
+// const validationSchema = yup.object().shape({
+//     employer_email: yup
+//         .string()
+//         .email("דואר אלקטרוני לא תקין")
+//         .required('דואר אלקטרוני הוא שדה חובה'),
+//     business_name: yup
+//         .string()
+//         .required('חובה להזין שם מלא'),
+//     business_address: yup
+//         .string(),
+//     full_address: yup
+//         .number()
+//         .test('len', 'שנה לא תקינה', val => Number(val) > 1970 && Number(val) < new Date().getFullYear())
+//         .required('חובה להזין שנת לידה'),
+//     business_website: yup
+//         .number()
+//         .test('len', 'חודש לא תקין', val => Number(val) > 0 && Number(val) < 13)
+//         .required('חובה להזין חודש לידה'),
+//     description: yup
+//         .string()
+//         .test('len', 'יום לא תקין', val => Number(val) > 0 && Number(val) < 32)
+//         .required('חובה להזין יום לידה'),
+// })
+
+const FormProfile = ({ handleChange, handleBlur, values }) => {
     return (
         <View>
             <InputText
+                onChangeText={handleChange('business_name')}
+                onBlur={handleBlur('business_name')}
+                value={values.business_name}
                 label="שם העסק"
             />
             <InputText
+                onChangeText={handleChange('business_address.full_address')}
+                onBlur={handleBlur('business_address.full_address')}
+                value={values.business_address.full_address}
                 label="כתובת העסק"
             />
             <InputText
+                onChangeText={handleChange('business_website')}
+                onBlur={handleBlur('business_website')}
+                value={values.business_website}
                 label="קישור לאתר העסק"
             />
             <InputText
+                onChangeText={handleChange('description')}
+                onBlur={handleBlur('description')}
+                value={values.description}
                 label="תיאור העסק"
                 placeholder="כאן כדאי לרשום תיאור קצר של בית העסק"
             />
@@ -28,29 +69,108 @@ const FormProfile = () => {
 };
 
 export default function CreateProfileEmployer({ navigation }) {
+    const [loading, setLoader] = React.useState(false);
+
+    function nextPage() {
+        navigation.replace('משרות לפרסום');
+        setLoader(false);
+    }
+
+    function submit(values) {
+        setLoader(true);
+        post(EMPLOYERS, values).then(async res => {
+            await AsyncStorage.setItem(
+                'employer_id',
+                res.employer_id
+            );
+            setLoader(false);
+            nextPage();
+        }).catch(e => {
+            Alert.alert('', 'משהו קרה, נסה שנית!');
+            setLoader(false);
+        });
+        // fetch(EMPLOYERS, {
+        //     method: 'POST',
+        //     body: JSON.stringify(values)
+        // }).then(res => res.json()).then(async res => {
+        //     await AsyncStorage.setItem(
+        //         'employer_id',
+        //         res.employer_id
+        //     );
+        //     setLoader(false);
+        //     nextPage();
+        // }).catch(e => {
+        //     Alert.alert('', 'משהו קרה, נסה שנית!');
+        //     setLoader(false);
+        // });
+    }
+
+    React.useEffect(() => {
+        AsyncStorage.getItem('employer_id').then(employerId => {
+            if (employerId) {
+                nextPage();
+            }
+        })
+    }, []);
+
+    const initialValues = {
+        employer_email: '',
+        business_name: '',
+        business_address: { full_address: '' },
+        business_website: '',
+        description: ''
+    }
+
+    if (loading) {
+        return (
+            <View style={{
+                flex: 1, justifyContent: "center"
+            }}>
+                <ActivityIndicator size="large" />
+            </View>
+        );
+    }
+
     return (
-        <View accessible={true} style={styles.wrapper}>
-            {/* <View style={styles.uploadProfileImageWrapper}>
+        <Formik
+            // validationSchema={validationSchema}
+            initialValues={initialValues}
+            onSubmit={values => submit(values)}
+        >
+            {(formikHelpers) => (
+                <View accessible={true} style={styles.wrapper}>
+                    {/* <View style={styles.uploadProfileImageWrapper}>
                 <UploadProfileImage />
             </View> */}
-            <View style={styles.formWrapper}>
-                <FormProfile />
-            </View>
-            <View style={styles.buttonWrapper}>
-                <Button
-                    accessibilityLabel="המשך לשלב הבא"
-                    buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
-                    icon={
-                        <Icon
-                            name="arrow-back"
-                            size={30}
-                            color={Theme.white}
+                    <View style={styles.formWrapper}>
+                        <FormProfile {...formikHelpers} />
+                    </View>
+                    <View style={styles.buttonWrapper}>
+                        <Button
+                            onPress={() => {
+                                const { isValid, errors } = formikHelpers;
+                                if (!isValid) {
+                                    const firstErrorKey = Object.keys(errors)[0];
+                                    Alert.alert('', errors[firstErrorKey]);
+                                } else {
+                                    formikHelpers.handleSubmit();
+                                }
+                            }}
+                            accessibilityLabel="המשך לשלב הבא"
+                            buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
+                            icon={
+                                <Icon
+                                    name="arrow-back"
+                                    size={30}
+                                    color={Theme.white}
+                                />
+                            }
                         />
-                    }
-                />
 
-            </View>
-        </View>
+                    </View>
+                </View>
+            )}
+        </Formik>
     );
 }
 
