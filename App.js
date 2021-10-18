@@ -1,14 +1,13 @@
-import * as React from "react";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import Theme from "./theme";
-import HomeScreen from "./screens/HomeScreen";
-import AboutScreen from "./screens/AboutScreen";
-import SkillsQuestionsScreen from "./screens/SkillsQuestionsScreen";
-import ChooseUserTypeScreen from "./screens/ChooseUserTypeScreen";
-import { useFonts, Rubik_400Regular } from "@expo-google-fonts/rubik";
-import JobliLoader from "./components/JobliLoader";
-import { StyleSheet, I18nManager } from "react-native";
+import * as React from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Theme from './theme';
+// import HomeScreen from './screens/HomeScreen';
+import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen';
+import ChooseUserTypeScreen from './screens/ChooseUserTypeScreen';
+import { useFonts, Rubik_400Regular } from '@expo-google-fonts/rubik';
+import JobliLoader from './components/JobliLoader';
+import { StyleSheet, I18nManager } from 'react-native';
 
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
@@ -80,27 +79,24 @@ function App() {
     Rubik_400Regular,
   });
   if (!fontsLoaded) {
-    return <JobliLoader />;
-  } else
-    return (
-      <NavigationContainer theme={navTheme}>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="JobsList" component={JobsListScreen} />
-          <Stack.Screen name="About" component={AboutScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
-          <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
-          <Stack.Screen name={PostJobWizardScreenName} options={PostJobWizardScreenOptions} component={PostJobWizard} />
-          <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} />
-          <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
-          <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
-          <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: "בחירת שפה" }} />
-          <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} name="AboutMeProfileScreen" options={{ title: "יצירת פרופיל" }} />
-          <Stack.Screen name="Summary" component={SummaryScreen} options={{ title: "סיכום" }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
+    return <JobliLoader />
+  } else return (
+    <NavigationContainer theme={navTheme}>
+      <Stack.Navigator initialRouteName="Login">
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        <Stack.Screen name="JobsList" component={JobsListScreen} options={{ title: 'הצעות עבודה' }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'התחברות' }} />
+        <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
+        <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
+        <Stack.Screen name={PostJobWizardScreenName} options={PostJobWizardScreenOptions} component={PostJobWizard} />
+        <Stack.Screen name="SkillsQuestions" component={SkillsQuestionsScreen} options={{ title: '' }} />
+        <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
+        <Stack.Screen name="SkillsSummary" component={SkillsSummary} options={{ title: 'שאלון' }} />
+        <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'בחירת שפה' }} />
+        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} name="AboutMeProfileScreen"  options={{ title: 'יצירת פרופיל' }} />
+        <Stack.Screen name="Summary" component={SummaryScreen} options={{ title: 'סיכום' }} />
+      </Stack.Navigator>
+    </NavigationContainer>);
 }
 
 export default App;
