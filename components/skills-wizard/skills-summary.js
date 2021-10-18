@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { View, Text, Button, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {post} from '../../services/api.service'
-import { SEEKER_PROFILE_ANSWERS_URL } from '../../constants'
 
 const styles = StyleSheet.create({
   container: {display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 5, fontSize: 20},
@@ -27,6 +26,7 @@ const styles = StyleSheet.create({
 
 export default SkillsSummary = ({navigation, route}) => {
   const [answers, setAnswers] = useState(route.params.answers || []);
+
   const skillsJSX = answers.map((item, index) =>
     <View key={item.key}>
       <View style={styles.container}>
@@ -65,11 +65,9 @@ export default SkillsSummary = ({navigation, route}) => {
 
   const onApply = async () => {
     try{
-      console.log(answers);
-      const USER_ID = '11111'
-      const res = await post(SEEKER_PROFILE_ANSWERS_URL(USER_ID), answers);
-      navigation.replace('AddLanguage')
-      console.log(res);
+      console.log('answers: ', answers)
+      await post('/api/seeker/answers', answers);
+      navigation.replace('Summary');
     } catch (e) {
       console.log(e)
     }

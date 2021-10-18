@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView, Button } from "react-native";
 import { get } from "../services/api.service";
-import { SEEKER_SUMMARY } from "../constants";
 import Theme from "./../theme";
 
 const styles = StyleSheet.create({
@@ -11,45 +10,15 @@ const styles = StyleSheet.create({
   subTitle: { fontSize: 16, backgroundColor: Theme.c2, padding: 5 },
 });
 
-// const mock = {
-//   profile: {
-//     id: "830ac377-9846-4c9a-96eb-7d2ea9560357",
-//     full_name: "test user 1",
-//     birth_date: 143769600000,
-//     address: "Ramat Gan",
-//     email: "testuser1@gmail.com",
-//     languages: ["english", "hebrew", "russian", "france", "spanish"],
-//     creationTime: "2021-10-17T09:11:12.229Z",
-//     lastUpdateTime: "2021-10-17T09:11:12.229Z",
-//     version: 0,
-//   },
-//   experience_list: [
-//     {
-//       workplace_name: "microsoft",
-//       start_year: 1984,
-//       end_year: 1985,
-//       role: "Developer",
-//       role_description: "Worked as a developer",
-//     },
-//     {
-//       workplace_name: "microsoft",
-//       start_year: 1984,
-//       end_year: 1985,
-//       role: "Developer",
-//       role_description: "Worked as a developer",
-//     },
-//   ],
-// };
-
 export default function SummaryScreen({ navigation }) {
   const [userSummary, setUserSummary] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const getProfile = async () => {
     try {
-      const res = await get(SEEKER_SUMMARY);
+      const res = await get('/api/seeker/summary');
       setUserSummary(res.data);
-      // setUserSummary(mock);
+      console.log('summary: ', res.data);
     } catch (e) {
       console.log(e);
     }
