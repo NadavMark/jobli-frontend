@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import MultiSelect from "react-native-multiple-select";
 import Icon from "react-native-vector-icons/Ionicons";
 import { SEEKER_LANGUAGES_URL } from "../constants";
-import { put } from "../services/api.service";
+import { put, get } from "../services/api.service";
 
 const items = [
   {
@@ -57,7 +57,7 @@ export default function AddLanguageScreen({ navigation }) {
   useEffect(() => {
     (async () => {
       const userData = await get("/api/seeker/profile").catch(console.log);
-      console.log(userData);
+      setUserSummary(userData.data);
     })();
   }, []);
 
@@ -70,9 +70,8 @@ export default function AddLanguageScreen({ navigation }) {
   const onApply = async (selectedItems) => {
     try {
       console.log(selectedItems);
-      const res = await put(SEEKER_LANGUAGES_URL, selectedItems);
-      navigation.replace("Summary");
-      console.log(res);
+      await put("/api/seeker/profile", { ...userSummary, ...{ languages: selectedItems } });
+      navigation.replace("SkillsQuestions");
     } catch (e) {
       console.log(e);
     }

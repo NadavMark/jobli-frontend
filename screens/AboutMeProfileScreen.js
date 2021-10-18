@@ -1,10 +1,11 @@
-import * as React from "react";
-import { Text, View, TextInput, StyleSheet, Alert, ActivityIndicator } from "react-native";
-import { Formik } from "formik";
-import { Icon, Button } from "react-native-elements";
-import * as yup from "yup";
-import Theme from "../theme";
-import { put, get } from "../services/api.service";
+import * as React from 'react';
+import { Text, View, TextInput, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { Formik } from 'formik';
+import { Icon, Button } from 'react-native-elements';
+import * as yup from 'yup';
+import Theme from '../theme';
+import { put, get } from '../services/api.service';
+import useAxios from '../hooks/axios.hook';
 
 const validationSchema = yup.object().shape({
   about_me: yup.string(),
@@ -70,6 +71,17 @@ const FormAboutMe = ({ handleChange, handleBlur, values }) => {
 export default function AboutMeProfileScreen({ navigation }) {
   const [submitLoading, setLoader] = React.useState(false);
 
+  const { response, loading, error } = useAxios({
+    method: 'get',
+    url: '/api/seeker/profile',
+  });
+
+  React.useEffect(() => {
+    if (response && (response.about_me || response.job_ambitions || response.hobbies)) {
+        navigation.replace('AddLanguage');
+    }
+}, [response])
+
   function submit(values) {
     setLoader(true);
     get("/api/seeker/profile", values).then(async ({ data }) => {
@@ -82,13 +94,11 @@ export default function AboutMeProfileScreen({ navigation }) {
         email: data.email,
       };
 
-      put("/api/seeker/profile", { ...values, ...results })
-        .then(async (res) => {
-          setLoader(false);
-          navigation.replace("AddLanguageScreen");
-        })
-        .catch((error) => console.log(">>>", error));
-    });
+      put('/api/seeker/profile', {...values, ...results}).then(async res => {
+        setLoader(false);
+        navigation.replace('AddLanguage')
+      }).catch(error => console.log('>>>', error))
+    })
   }
 
   const initialValues = {
@@ -97,7 +107,7 @@ export default function AboutMeProfileScreen({ navigation }) {
     hobbies: "",
   };
 
-  if (submitLoading) {
+  if (submitLoading || loading) {
     return (
       <View
         style={{
