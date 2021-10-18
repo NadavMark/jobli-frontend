@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { Hub } from 'aws-amplify';
 import { Button } from 'react-native-elements';
-import { isAuthenticated, storeUserDetails, googleSignIn } from '../services/auth.service';
+import { storeUserDetails, googleSignIn } from '../services/auth.service';
+import { StorageKey } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }) {
     const [loading, setLoader] = useState(false);
+
+    async function navigateToNextScreen() {
+        const value = await AsyncStorage.getItem(StorageKey.SKIP_PROFILE_WIZARD_KEY);
+        if (value === 'true') {
+            navigation.replace('JobsList');
+        } else {
+            navigation.replace('ChooseUserTypeScreen');
+        }
+    }
 
     const hubCallback = async ({ payload: { event, data } }) => {
         setLoader(false);
@@ -14,7 +25,7 @@ export default function LoginScreen({ navigation }) {
                 await storeUserDetails();
                 setLoader(true);
                 setTimeout(() => {
-                    navigation.replace('ChooseUserTypeScreen');
+                    navigateToNextScreen();
                 }, 1000)
                 break;
             case 'signOut':
@@ -28,9 +39,6 @@ export default function LoginScreen({ navigation }) {
     }
     useEffect(() => {
         Hub.listen('auth', hubCallback);
-        return () => {
-            Hub.remove(hubCallback);
-        }
     }, []);
 
     if (loading) {

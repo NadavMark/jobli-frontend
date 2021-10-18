@@ -93,7 +93,7 @@ function App() {
         <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} options={{ title: 'שאלון' }} />
         <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'בחירת שפה' }} />
-        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} name="AboutMeProfileScreen"  options={{ title: 'יצירת פרופיל' }} />
+        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} options={{ title: 'יצירת פרופיל' }} />
         <Stack.Screen name="Summary" component={SummaryScreen} options={{ title: 'סיכום' }} />
       </Stack.Navigator>
     </NavigationContainer>);
