@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView, Button } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView, Icon } from "react-native";
 import { get } from "../services/api.service";
 import Theme from "./../theme";
 
@@ -84,8 +84,11 @@ export default function SummaryScreen({ navigation }) {
         </View>
       </ScrollView>
       {userSummary && (
-        <Button
-          title="התחל לחפש עבודה"
+        <Icon
+          name="ios-checkmark"
+          type="ionicon"
+          color="white"
+          size={28}
           onPress={() => {
             navigation.navigate("JobsList");
           }}
