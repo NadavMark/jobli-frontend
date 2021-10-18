@@ -2,6 +2,7 @@ import axios from "axios";
 import { userTokenId } from "../services/auth.service";
 import { BASE_URL } from '../constants';
 import { NavigationContext } from '@react-navigation/native';
+import React from 'react';
 
 axios.defaults.baseURL = BASE_URL;
 
@@ -17,9 +18,10 @@ axios.interceptors.request.use(async function (config) {
 axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  if (401 === error.response.status) {
-    const navigation = React.useContext(NavigationContext);
-    navigation.replace('LoginScreen');
+  if (401 === error?.response?.status) {
+//    const navigation = React.useContext(NavigationContext);
+//    navigation.replace('LoginScreen');
+    console.log('401')
   } else {
       return Promise.reject(error);
   }
