@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView, Icon } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import { get } from "../services/api.service";
 import Theme from "./../theme";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StorageKey } from '../constants';
 
 const styles = StyleSheet.create({
   container: { margin: 5, fontSize: 20, color: "red" },
   header: { fontSize: 25, textAlign: "left" },
   text: { fontSize: 16, padding: 5 },
   subTitle: { fontSize: 16, backgroundColor: Theme.c2, padding: 5 },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
+  },
+  buttonCircle: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#00C853",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default function SummaryScreen({ navigation }) {
@@ -86,16 +98,19 @@ export default function SummaryScreen({ navigation }) {
         </View>
       </ScrollView>
       {userSummary && (
-        <Icon
-          name="ios-checkmark"
-          type="ionicon"
-          color="white"
-          size={28}
-          onPress={() => {
-            navigation.replace("JobsList");
-            AsyncStorage.setItem(StorageKey.SKIP_PROFILE_WIZARD_KEY, 'true');
-          }}
-        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonCircle}>
+            <Icon
+              name="ios-checkmark"
+              type="ionicon"
+              color="white"
+              size={30}
+              onPress={() => {
+                navigation.replace("JobsList");
+              }}
+            />
+          </View>
+        </View>
       )}
     </>
   );
