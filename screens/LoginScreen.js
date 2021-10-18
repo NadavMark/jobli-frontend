@@ -1,60 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { Hub } from 'aws-amplify';
 import { Button } from 'react-native-elements';
-import { isAuthenticated, storeUserDetails, googleSignIn } from '../services/auth.service';
-import { get } from '../services/api.service';
+import { storeUserDetails, googleSignIn } from '../services/auth.service';
+import { StorageKey } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }) {
-    const [state, setState] = useState({
-        authLoading: false,
-        apiCheckLoading: false
-    });
-    useEffect(() => {
-        Hub.listen('auth', async ({ payload: { event, data } }) => {
-            switch (event) {
-                case 'signIn':
-                    await storeUserDetails();
-                    navigation.navigate('ChooseUserTypeScreen');
-                    break;
-                case 'signOut':
-                    break;
-                case 'signIn_failure':
-                case 'cognitoHostedUI_failure':
-                    console.log('Sign in failure', data);
-                    break;
-            }
-        });
+    const [loading, setLoader] = useState(false);
 
-        isAuthenticated().then((isAuth) => {
-            setState({
-                ...state,
-                authLoading: true
-            });
-            if (isAuth) {
-                get('/api/seeker/profile').then(() => {
-                    navigation.navigate('ChooseUserTypeScreen');
-                }).catch((err) => {
-                    setState({
-                        apiCheckLoading: true,
-                        authLoading: true
-                    });
-                })
-            } else {
-                setState({
-                    apiCheckLoading: true,
-                    authLoading: true
-                });
-            }
-        });
+    async function navigateToNextScreen() {
+        const value = await AsyncStorage.getItem(StorageKey.SKIP_PROFILE_WIZARD_KEY);
+        if (value === 'true') {
+            navigation.replace('JobsList');
+        } else {
+            navigation.replace('ChooseUserTypeScreen');
+        }
+    }
+
+    const hubCallback = async ({ payload: { event, data } }) => {
+        setLoader(false);
+        switch (event) {
+            case 'signIn':
+                await storeUserDetails();
+                setLoader(true);
+                setTimeout(() => {
+                    navigateToNextScreen();
+                }, 1000)
+                break;
+            case 'signOut':
+                break;
+            case 'signIn_failure':
+            case 'cognitoHostedUI_failure':
+                console.log('Sign in failure', data);
+                Alert.alert('שגיאת התחברות', 'משהו קרה, נסה שנית');
+                break;
+        }
+    }
+    useEffect(() => {
+        Hub.listen('auth', hubCallback);
     }, []);
 
-    if (!state.authLoading || !state.authLoading) {
+    if (loading) {
         return (
             <View style={{
-                flex: 1, justifyContent: "center"
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center"
             }}>
-                <ActivityIndicator size="large" />
+                <Text style={{ fontSize: 16, padding: 5 }}>טוען...</Text>
             </View>
         );
     }
@@ -63,7 +57,10 @@ export default function LoginScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Button
                 title="התחברות עם גוגל"
-                onPress={() => googleSignIn()}
+                onPress={() => {
+                    setLoader(true);
+                    googleSignIn();
+                }}
             />
         </View>
     );

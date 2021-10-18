@@ -101,15 +101,14 @@ export default function CreateProfileSeeker({ navigation }) {
 
     React.useEffect(() => {
         if (response && response.full_name) {
-            navigation.replace('AboutMeProfileScreen');
+            navigation.replace('AboutMeProfile');
         }
     }, [response])
 
     function submit(values) {
         setLoader(true);
         put('/api/seeker/profile', values).then(async res => {
-            setLoader(false)
-            navigation.replace('SkillsQuestions')
+            navigation.navigate('AboutMeProfile');
         })
     }
 
@@ -190,7 +189,7 @@ export default function CreateProfileSeeker({ navigation }) {
                         <Text style={styles.textPopup}>
                             לפניך שאלון קצר.
                             שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.
-                </Text>
+                        </Text>
                         <Button
                             onPress={formikHelpers.handleSubmit}
                             accessibilityLabel="בואו נתחיל"

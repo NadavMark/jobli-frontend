@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView, Icon } from "react-native";
 import { get } from "../services/api.service";
 import Theme from "./../theme";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StorageKey } from '../constants';
 
 const styles = StyleSheet.create({
   container: { margin: 5, fontSize: 20, color: "red" },
@@ -79,7 +81,7 @@ export default function SummaryScreen({ navigation }) {
     <>
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.header}>{userSummary.profile && userSummary.profile.full_name + " : "} פרופיל אישי</Text>
+          <Text style={styles.header}>{userSummary?.profile && userSummary?.profile.full_name + " : "} פרופיל אישי</Text>
           <View>{loading ? <Text style={styles.text}>טוען...</Text> : showUserSummary()}</View>
         </View>
       </ScrollView>
@@ -90,7 +92,8 @@ export default function SummaryScreen({ navigation }) {
           color="white"
           size={28}
           onPress={() => {
-            navigation.navigate("JobsList");
+            navigation.replace("JobsList");
+            AsyncStorage.setItem(StorageKey.SKIP_PROFILE_WIZARD_KEY, 'true');
           }}
         />
       )}
