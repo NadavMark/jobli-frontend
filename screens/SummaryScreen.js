@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView, Button } from "react-native";
 import { get } from "../services/api.service";
 import { SEEKER_SUMMARY } from "../constants";
 import Theme from "./../theme";
@@ -30,7 +30,14 @@ const styles = StyleSheet.create({
 //       end_year: 1985,
 //       role: "Developer",
 //       role_description: "Worked as a developer",
-//     }
+//     },
+//     {
+//       workplace_name: "microsoft",
+//       start_year: 1984,
+//       end_year: 1985,
+//       role: "Developer",
+//       role_description: "Worked as a developer",
+//     },
 //   ],
 // };
 
@@ -42,7 +49,7 @@ export default function SummaryScreen({ navigation }) {
     try {
       const res = await get(SEEKER_SUMMARY);
       setUserSummary(res.data);
-      //setUserSummary(mock);
+      // setUserSummary(mock);
     } catch (e) {
       console.log(e);
     }
@@ -100,11 +107,21 @@ export default function SummaryScreen({ navigation }) {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.header}>פרופיל אישי</Text>
-        <View>{loading ? <Text style={styles.text}>טוען...</Text> : showUserSummary()}</View>
-      </View>
-    </ScrollView>
+    <>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.header}>פרופיל אישי</Text>
+          <View>{loading ? <Text style={styles.text}>טוען...</Text> : showUserSummary()}</View>
+        </View>
+      </ScrollView>
+      {userSummary && (
+        <Button
+          title="התחל לחפש עבודה"
+          onPress={() => {
+            navigateUserByType(userType);
+          }}
+        />
+      )}
+    </>
   );
 }
