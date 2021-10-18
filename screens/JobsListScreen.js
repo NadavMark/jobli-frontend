@@ -1,5 +1,5 @@
 import React, { onChange } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Linking, TouchableHighlight } from 'react-native';
 import { Button } from 'react-native-elements';
 import { get } from '../services/api.service';
 
@@ -23,7 +23,7 @@ export default function JobsListScreen({ navigation }) {
                                  job_scope: 'מלאה',
                                  job_name: 'שוטף כלים',
                                  job_fields: 'מסעדות',
-                                 business_name: 'הבית קפה שלי',
+                                 business_name: 'בית הקפה שלי',
                                  business_address: 'תל אביב',
                                  business_website: 'www.coffeeshop.co.il',
                                  employer_email: 'contact@coffeeshop.co.il',
@@ -36,7 +36,7 @@ export default function JobsListScreen({ navigation }) {
                                  job_scope: 'חלקית',
                                  job_name: 'טבח',
                                  job_fields: 'מסעדות',
-                                 business_name: 'הבית קפה שלי',
+                                 business_name: 'בית הקפה שלי',
                                  business_address: 'תל אביב',
                                  business_website: 'www.coffeeshop.co.il',
                                  employer_email: 'contact@coffeeshop.co.il',
@@ -47,14 +47,25 @@ export default function JobsListScreen({ navigation }) {
 
      const renderJob = ({ item }) => (
          <View style={style.card}>
-             <Text>{item.job_name}</Text>
-             <Text>{item.job_description}</Text>
+            <View style={style.cardRightSide}>
+                <View style={style.cardRow}>
+                    <Text style={style.businessName}>{item.business_name} </Text>
+                    <Text style={style.businessAddress}>{item.business_address}</Text>
+                </View>
+                <View style={style.cardRow}>
+                    <Text style={style.jobName}>{item.job_name}  </Text>
+                    <Text>{item.job_fields}</Text>
+                </View>
+            <Text>{item.job_description}</Text>
+            <TouchableHighlight style={style.applyButton} onPress={() => Linking.openURL('mailto:mailto@' + item.employer_email + '?subject=abcdefg&body=body')}>
+                  <Text style={style.applyButtonText}>הגשת מועמדות</Text>
+            </TouchableHighlight>
+         </View>
+         <View style={style.cardLeftSide}>
+             <Text>{item.created_time}</Text>
              <Text>{item.job_scope}</Text>
-             <Text>{item.job_fields}</Text>
-             <Text>{item.business_name}</Text>
-             <Text>{item.business_address}</Text>
              <Text>{item.business_website}</Text>
-             <Text>{item.employer_email}</Text>
+         </View>
          </View>
      )
 
@@ -79,6 +90,39 @@ const style = StyleSheet.create({
          padding: 5,
          borderRadius: 10,
          flex: 1,
-         alignSelf: "stretch"
+         flexDirection: "row",
+         textAlign: "right"
+    },
+    cardRightSide: {
+        flex: 2,
+        flexDirection: "column",
+        textAlign: "left"
+    },
+    cardLeftSide: {
+        flex: 1,
+        flexDirection: "column"
+    },
+    cardRow: {
+        flexDirection: "row",
+        alignItems: "flex-end",
+        marginBottom: 10
+    },
+    businessName: {
+        fontSize: 12,
+        fontWeight: "bold"
+    },
+    businessAddress: {
+        fontSize: 10,
+        marginRight: 10
+    },
+    jobName: {
+        fontSize: 18
+    },
+    applyButton: {
+        paddingVertical: 10
+    },
+    applyButtonText: {
+        fontWeight: "bold",
+        fontSize: 16
     }
 });
