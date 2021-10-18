@@ -10,12 +10,15 @@ export default function LoginScreen({ navigation }) {
     const [loading, setLoader] = useState(false);
 
     async function navigateToNextScreen() {
-        const value = await AsyncStorage.getItem(StorageKey.SKIP_PROFILE_WIZARD_KEY);
-        if (value === 'true') {
-            navigation.replace('JobsList');
-        } else {
-            navigation.replace('ChooseUserTypeScreen');
-        }
+        AsyncStorage.getItem(StorageKey.SKIP_PROFILE_WIZARD_KEY).then((value) => {
+
+            console.log('value: ', value, typeof value)
+            if (value) {
+                navigation.replace('JobsList');
+            } else {
+                navigation.replace('ChooseUserTypeScreen');
+            }
+        });
     }
 
     const hubCallback = async ({ payload: { event, data } }) => {

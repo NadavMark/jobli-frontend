@@ -32,6 +32,7 @@ async function storeUserId() {
 function storeUserToken() {
   Auth.currentAuthenticatedUser()
   .then(async (userData) => {
+    console.log(userData.signInUserSession.idToken.jwtToken)
     userTokenId = userData.signInUserSession.idToken.jwtToken
   })
   .catch(() => console.log('Not signed in'));

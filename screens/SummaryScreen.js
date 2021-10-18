@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { get } from "../services/api.service";
 import Theme from "./../theme";
+import { StorageKey } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
   container: { margin: 5, fontSize: 20, color: "red" },
@@ -70,7 +72,9 @@ export default function SummaryScreen({ navigation }) {
           {userSummary.profile.birth_date && <Text style={styles.text}>{new Date(userSummary.profile.birth_date).toLocaleString()}</Text>}
           <Text style={styles.text}>{userSummary.profile.address}</Text>
           <Text style={styles.text}>{userSummary.profile.email}</Text>
-          {userSummary.profile.about_me && <Text style={styles.text}>{userSummary.profile.about_me}</Text>}
+          {userSummary?.profile?.about_me && <Text style={styles.text}>{userSummary.profile.about_me}</Text>}
+          {userSummary?.profile?.job_ambitions && <Text style={styles.text}>{userSummary.profile.job_ambitions}</Text>}
+          {userSummary?.profile?.hobbies && <Text style={styles.text}>{userSummary.profile.hobbies}</Text>}
 
           <Text style={styles.header}>שפות</Text>
           <FlatList
@@ -107,6 +111,9 @@ export default function SummaryScreen({ navigation }) {
               size={30}
               onPress={() => {
                 navigation.replace("JobsList");
+                AsyncStorage.setItem(StorageKey.SKIP_PROFILE_WIZARD_KEY, '1').then(() => {
+                  console.log('save: ', StorageKey.SKIP_PROFILE_WIZARD_KEY)
+                });
               }}
             />
           </View>
