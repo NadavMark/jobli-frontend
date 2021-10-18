@@ -12,11 +12,9 @@ import { StyleSheet, I18nManager } from 'react-native';
 
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import Amplify, { Auth, Hub } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import JobsListScreen from './screens/JobsListScreen';
-
-
 
 import AddLanguageScreen from './screens/AddLanguageScreen';
 import SkillsSummary from './components/skills-wizard/skills-summary';
@@ -103,7 +101,7 @@ function App() {
         <Stack.Screen options={{ headerShown: false }} name="ChooseUserTypeScreen" component={ChooseUserTypeScreen} />
         <Stack.Screen name="SkillsSummary" component={SkillsSummary} />
         <Stack.Screen name="AddLanguage" component={AddLanguageScreen} options={{ title: 'בחירת שפה' }} />
-        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} options={{ title: 'יצירת פרופיל' }} />
+        <Stack.Screen name="AboutMeProfile" component={AboutMeProfileScreen} name="AboutMeProfileScreen"  options={{ title: 'יצירת פרופיל' }} />
         <Stack.Screen name="Summary" component={SummaryScreen} options={{ title: 'סיכום' }} />
       </Stack.Navigator>
     </NavigationContainer>);
