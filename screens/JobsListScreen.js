@@ -1,48 +1,37 @@
 import React, { onChange } from 'react';
-import { View, Text, FlatList, StyleSheet, Linking, TouchableHighlight } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Linking, TouchableHighlight, Pressable } from 'react-native';
 import { Button } from 'react-native-elements';
 import { get } from '../services/api.service';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function JobsListScreen({ navigation }) {
 
     const [data, updateData] = React.useState('');
 
-//    async function getData(updateData) {
-//            const res = await get('/api/employers', {});
-//            console.log(res)
-//            updateData(JSON.stringify(res));
-//    }
-//
+    async function getData() {
+            const res = await get('/api/seeker/relevant-jobs', {});
+            updateData(mapResponse(res));
+    }
+
+    function mapResponse(list) {
+        return list.data.map(el => {
+            return {
+             job_id: el.employer_job.job_id,
+             created_time: (new Date(el.employer_job.created_time)).toLocaleDateString(),
+             job_description: el.employer_job.job_description,
+             job_scope: el.employer_job.job_scope,
+             job_name: el.employer_job.job_name,
+             job_fields: el.employer_job.job_fields.join(),
+             business_name: el.employer.business_name,
+             business_address: el.employer.business_address.city,
+             business_website: el.employer.business_website,
+             employer_email: el.employer.employer_email
+            }
+        })
+    }
+
     React.useEffect(() => {
-        const mock = [
-                             {
-                                 job_id: 1,
-                                 employer_id: 3,
-                                 created_time: '1634471825136',
-                                 job_description: 'תיאור המשרה ייכנס פה',
-                                 job_scope: 'מלאה',
-                                 job_name: 'שוטף כלים',
-                                 job_fields: 'מסעדות',
-                                 business_name: 'בית הקפה שלי',
-                                 business_address: 'תל אביב',
-                                 business_website: 'www.coffeeshop.co.il',
-                                 employer_email: 'contact@coffeeshop.co.il',
-                             },
-                             {
-                                 job_id: 2,
-                                 employer_id: 3,
-                                 created_time: '1634471936441',
-                                 job_description: 'תיאור המשרה הנוספת ייכנס פה',
-                                 job_scope: 'חלקית',
-                                 job_name: 'טבח',
-                                 job_fields: 'מסעדות',
-                                 business_name: 'בית הקפה שלי',
-                                 business_address: 'תל אביב',
-                                 business_website: 'www.coffeeshop.co.il',
-                                 employer_email: 'contact@coffeeshop.co.il',
-                             }
-                         ]
-        updateData(mock);
+        getData();
     }, [])
 
      const renderJob = ({ item }) => (
@@ -56,16 +45,17 @@ export default function JobsListScreen({ navigation }) {
                     <Text style={style.jobName}>{item.job_name}  </Text>
                     <Text>{item.job_fields}</Text>
                 </View>
-            <Text>{item.job_description}</Text>
-            <TouchableHighlight style={style.applyButton} onPress={() => Linking.openURL('mailto:mailto@' + item.employer_email + '?subject=abcdefg&body=body')}>
-                  <Text style={style.applyButtonText}>הגשת מועמדות</Text>
-            </TouchableHighlight>
-         </View>
-         <View style={style.cardLeftSide}>
-             <Text>{item.created_time}</Text>
-             <Text>{item.job_scope}</Text>
-             <Text>{item.business_website}</Text>
-         </View>
+                <Text>{item.job_description}</Text>
+                <Pressable style={style.applyButton} onPress={() => Linking.openURL('mailto:mailto@' + item.employer_email + '?subject=abcdefg&body=body')}>
+                      <Text style={style.applyButtonText}>הגשת מועמדות  </Text>
+                      <Icon name="angle-left" size={20} color="#900" />
+                </Pressable>
+            </View>
+             <View style={style.cardLeftSide}>
+                 <Text style={style.date}>{item.created_time}</Text>
+                 <Text>{item.job_scope}</Text>
+                 <Text>{item.business_website}</Text>
+             </View>
          </View>
      )
 
@@ -74,7 +64,7 @@ export default function JobsListScreen({ navigation }) {
              <FlatList
                     data={data}
                     renderItem={renderJob}
-                    keyExtractor={job => job.job_id.toString()}
+                    keyExtractor={job => job && job.job_id ? job.job_id.toString() : null}
               />
         </View>
     );
@@ -119,10 +109,15 @@ const style = StyleSheet.create({
         fontSize: 18
     },
     applyButton: {
-        paddingVertical: 10
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5
     },
     applyButtonText: {
         fontWeight: "bold",
         fontSize: 16
+    },
+    date: {
+        fontSize: 10
     }
 });
