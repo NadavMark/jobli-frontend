@@ -118,7 +118,7 @@ export default function SummaryScreen({ navigation }) {
         <Button
           title="התחל לחפש עבודה"
           onPress={() => {
-            navigateUserByType(userType);
+            navigation.navigate("JobsList");
           }}
         />
       )}
