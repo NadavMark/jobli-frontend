@@ -85,7 +85,7 @@ function App() {
       <Stack.Navigator initialRouteName="Login">
         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
         <Stack.Screen name="JobsList" component={JobsListScreen} options={{ title: 'הצעות עבודה' }} />
-        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'התחברות' }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'התחברות', headerShown: false }} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
         <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
         <Stack.Screen name={PostJobWizardScreenName} options={PostJobWizardScreenOptions} component={PostJobWizard} />

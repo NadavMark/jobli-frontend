@@ -4,12 +4,17 @@
   "expo": {
     "name": "jobli",
     "slug": "jobli",
+    "icon": "./assets/icon.png",
     "version": "1.0.0",
     "scheme": "jobli",
     "assetBundlePatterns": [
       "**/*"
     ],
     "description": "",
-    "githubUrl": "https://github.com/CyberArkForTheCommunity/jobli-frontend"
+    "githubUrl": "https://github.com/CyberArkForTheCommunity/jobli-frontend",
+    "android": {
+      "package": "com.akim.jobli",
+      "versionCode": 1
+    }
   }
 }

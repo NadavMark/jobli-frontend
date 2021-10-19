@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, StyleSheet, Image } from 'react-native';
 import { Hub } from 'aws-amplify';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import { storeUserDetails, googleSignIn } from '../services/auth.service';
 import { StorageKey } from '../constants';
+import Theme from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }) {
@@ -57,9 +58,22 @@ export default function LoginScreen({ navigation }) {
     }
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.container}>
+            <Image style={styles.imageStyle} resizeMode="contain" source={require('./../assets/images/JobliLogo.png')} />
             <Button
                 title="התחברות עם גוגל"
+                iconRight={true}
+                titleStyle={{color: Theme.c3}}
+                buttonStyle={styles.button}
+                icon={
+                    <Icon
+                        name="google"
+                        size={15}
+                        color={Theme.c3}
+                        type="font-awesome"
+                        style={{ paddingLeft: 10 }}
+                        />
+                }
                 onPress={() => {
                     setLoader(true);
                     googleSignIn();
@@ -68,3 +82,26 @@ export default function LoginScreen({ navigation }) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+      backgroundColor: "#FFF",
+      height: "100%",
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-around'
+    },
+    button: {
+        borderRadius: 90,
+        backgroundColor: Theme.white,
+        borderColor: Theme.c3,
+        borderWidth: 1,
+        borderStyle: 'solid'
+    },
+    imageStyle: {
+        width: 162,
+        height: 74,
+        marginTop: 100
+    },
+});
+  
