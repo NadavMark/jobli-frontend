@@ -1,4 +1,4 @@
-export const BASE_URL = "https://kwqwc5uojf.execute-api.eu-west-1.amazonaws.com/prod";
+export const BASE_URL = "https://h4she6zb80.execute-api.eu-west-1.amazonaws.com/prod";
 
 
 export const StorageKey = {
