@@ -65,7 +65,7 @@ export default SkillsSummary = ({navigation, route}) => {
 
   const onApply = async () => {
     try{
-      console.log('answers: ', answers)
+      // console.log('answers: ', answers)
       await post('/api/seeker/answers', answers);
       navigation.replace('Summary');
     } catch (e) {

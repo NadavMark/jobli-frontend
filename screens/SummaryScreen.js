@@ -34,7 +34,7 @@ export default function SummaryScreen({ navigation }) {
     try {
       const res = await get("/api/seeker/summary");
       setUserSummary(res.data);
-      console.log("summary: ", res.data);
+      // console.log("summary: ", res.data);
     } catch (e) {
       console.log(e);
     }
@@ -112,7 +112,7 @@ export default function SummaryScreen({ navigation }) {
               onPress={() => {
                 navigation.replace("JobsList");
                 AsyncStorage.setItem(StorageKey.SKIP_PROFILE_WIZARD_KEY, '1').then(() => {
-                  console.log('save: ', StorageKey.SKIP_PROFILE_WIZARD_KEY)
+                  // console.log('save: ', StorageKey.SKIP_PROFILE_WIZARD_KEY)
                 });
               }}
             />

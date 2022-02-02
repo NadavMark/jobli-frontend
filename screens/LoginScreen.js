@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
     async function navigateToNextScreen() {
         AsyncStorage.getItem(StorageKey.SKIP_PROFILE_WIZARD_KEY).then((value) => {
 
-            console.log('value: ', value, typeof value)
+            // console.log('value: ', value, typeof value)
             if (value) {
                 navigation.replace('JobsList');
             } else {
