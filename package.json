@@ -5,8 +5,8 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "expo start",
-    "start:expo": "expo start",
     "start:android": "expo run:android",
+    "build:android": "expo build:android -t apk",
     "start:web": "expo run:web",
     "test": "jest"
   },

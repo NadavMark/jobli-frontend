@@ -20,4 +20,20 @@ notes:
 
 - run commnad: `npm install`
 
-- run commnad: `expo start --android`
+- run commnad: `npm start` (will open an expo local server)
+
+### Run on Android
+
+when expo local server is up and available in `http://localhost:19002/` you will need to change connection to `local` and then press `Run on Android device/emulator`
+
+<div style="text-align: center">
+  <img width="1200px" src="README/assets/expo-local-server.png" />
+</div>
+
+## Build APK file for Android
+
+- You will need to connect the app to `https://expo.dev/`
+
+- Run command `npm run build:android` 
+
+this command will trigger a build in the `https://expo.dev/` website and when it's done you will be able to download the apk file from `https://expo.dev/` (when the build is succeeded you will get specific link to the build in your account).
