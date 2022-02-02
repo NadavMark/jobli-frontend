@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { View, TouchableOpacity, Dimensions, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, ScrollView, Dimensions, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import Theme from '../../theme';
 import InputText from '../../components/input-text';
-import UploadProfileImage from './UploadProfileImage';
 import { Icon, Button, Overlay } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -145,61 +144,63 @@ export default function CreateProfileSeeker({ navigation }) {
     }
 
     return (
-        <Formik
-            validationSchema={validationSchema}
-            initialValues={initialValues}
-            onSubmit={values => submit(values)}
-        >
-            {(formikHelpers) => (
-                <View accessible={true} style={styles.wrapper}>
-                    {/* <View style={styles.uploadProfileImageWrapper}>
-                <UploadProfileImage />
-            </View> */}
-                    <View style={styles.formWrapper}>
+        <ScrollView>
+            <Formik
+                validationSchema={validationSchema}
+                initialValues={initialValues}
+                onSubmit={values => submit(values)}
+            >
+                {(formikHelpers) => (
+                    <View accessible={true} style={styles.wrapper}>
+                        {/* <View style={styles.uploadProfileImageWrapper}>
+                    <UploadProfileImage />
+                </View> */}
+                        <View style={styles.formWrapper}>
 
-                        <FormProfile {...formikHelpers} />
+                            <FormProfile {...formikHelpers} />
 
-                    </View>
-                    <View style={styles.buttonWrapper}>
-                        <Button
-                            onPress={() => {
-                                const { isValid, errors } = formikHelpers;
-                                if (!isValid) {
-                                    const firstErrorKey = Object.keys(errors)[0];
-                                    Alert.alert('', errors[firstErrorKey]);
-                                    setVisible(false)
-                                } else {
-                                    setVisible(true)
+                        </View>
+                        <View style={styles.buttonWrapper}>
+                            <Button
+                                onPress={() => {
+                                    const { isValid, errors } = formikHelpers;
+                                    if (!isValid) {
+                                        const firstErrorKey = Object.keys(errors)[0];
+                                        Alert.alert('', errors[firstErrorKey]);
+                                        setVisible(false)
+                                    } else {
+                                        setVisible(true)
+                                    }
+                                }}
+                                accessibilityLabel="המשך לשלב הבא"
+                                buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
+                                icon={
+                                    <Icon
+                                        name="arrow-back"
+                                        size={30}
+                                        color={Theme.white}
+                                    />
                                 }
-                            }}
-                            accessibilityLabel="המשך לשלב הבא"
-                            buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
-                            icon={
-                                <Icon
-                                    name="arrow-back"
-                                    size={30}
-                                    color={Theme.white}
-                                />
-                            }
-                        />
+                            />
 
+                        </View>
+                        <Overlay isVisible={visible} onBackdropPress={setVisible} overlayStyle={{ padding: 20, margin: 20 }}>
+                            <Text style={styles.titlePopup}>על מנת שנכיר יותר טוב</Text>
+                            <Text style={styles.textPopup}>
+                                לפניך שאלון קצר.
+                                שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.
+                            </Text>
+                            <Button
+                                onPress={formikHelpers.handleSubmit}
+                                accessibilityLabel="בואו נתחיל"
+                                title="בואו נתחיל"
+                                buttonStyle={{ backgroundColor: Theme.c3 }}
+                            />
+                        </Overlay>
                     </View>
-                    <Overlay isVisible={visible} onBackdropPress={setVisible} overlayStyle={{ padding: 20, margin: 20 }}>
-                        <Text style={styles.titlePopup}>על מנת שנכיר יותר טוב</Text>
-                        <Text style={styles.textPopup}>
-                            לפניך שאלון קצר.
-                            שאלות אלו יסייעו לנו במציאת המשרה המתאימה ביותר עבורך.
-                        </Text>
-                        <Button
-                            onPress={formikHelpers.handleSubmit}
-                            accessibilityLabel="בואו נתחיל"
-                            title="בואו נתחיל"
-                            buttonStyle={{ backgroundColor: Theme.c3 }}
-                        />
-                    </Overlay>
-                </View>
-            )}
-        </Formik>
+                )}
+            </Formik>
+        </ScrollView>
     );
 }
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, TextInput, StyleSheet, Alert, ActivityIndicator } from "react-native";
+import { Text, View, TextInput, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { Formik } from "formik";
 import { Icon, Button } from "react-native-elements";
 import * as yup from "yup";
@@ -123,27 +123,29 @@ export default function AboutMeProfileScreen({ navigation }) {
   }
 
   return (
-    <Formik validationSchema={validationSchema} initialValues={initialValues} onSubmit={(values) => submit(values)}>
-      {(formikHelpers) => (
-        <>
-          <View style={styles.container} accessible={true}>
-            <Text style={styles.textLabel}>קצת עלי</Text>
-            <Text style={styles.textSubLabel}>כאן זה המקום לספר על עצמך</Text>
-            <View>
-              <FormAboutMe {...formikHelpers} />
+    <ScrollView>
+      <Formik validationSchema={validationSchema} initialValues={initialValues} onSubmit={(values) => submit(values)}>
+        {(formikHelpers) => (
+          <>
+            <View style={styles.container} accessible={true}>
+              <Text style={styles.textLabel}>קצת עלי</Text>
+              <Text style={styles.textSubLabel}>כאן זה המקום לספר על עצמך</Text>
+              <View>
+                <FormAboutMe {...formikHelpers} />
+              </View>
+              <View>
+                <Button
+                  onPress={formikHelpers.handleSubmit}
+                  accessibilityLabel="המשך לשלב הבא"
+                  buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
+                  icon={<Icon name="arrow-back" size={30} color={Theme.white} />}
+                />
+              </View>
             </View>
-            <View>
-              <Button
-                onPress={formikHelpers.handleSubmit}
-                accessibilityLabel="המשך לשלב הבא"
-                buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
-                icon={<Icon name="arrow-back" size={30} color={Theme.white} />}
-              />
-            </View>
-          </View>
-        </>
-      )}
-    </Formik>
+          </>
+        )}
+      </Formik>
+    </ScrollView>
   );
 }
 

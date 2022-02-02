@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { View, Dimensions, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, Dimensions, StyleSheet, Alert, ActivityIndicator, ScrollView } from 'react-native';
 import Theme from '../../theme';
 import { post } from '../../services/api.service';
 import InputText from '../../components/input-text';
-import UploadProfileImage from './UploadProfileImage';
 import { Icon, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -117,45 +116,47 @@ export default function CreateProfileEmployer({ navigation }) {
     }
 
     return (
-        <Formik
-            // validationSchema={validationSchema}
-            initialValues={initialValues}
-            onSubmit={values => submit(values)}
-        >
-            {(formikHelpers) => (
-                <View accessible={true} style={styles.wrapper}>
-                    {/* <View style={styles.uploadProfileImageWrapper}>
-                <UploadProfileImage />
-            </View> */}
-                    <View style={styles.formWrapper}>
-                        <FormProfile {...formikHelpers} />
-                    </View>
-                    <View style={styles.buttonWrapper}>
-                        <Button
-                            onPress={() => {
-                                const { isValid, errors } = formikHelpers;
-                                if (!isValid) {
-                                    const firstErrorKey = Object.keys(errors)[0];
-                                    Alert.alert('', errors[firstErrorKey]);
-                                } else {
-                                    formikHelpers.handleSubmit();
+        <ScrollView>
+            <Formik
+                // validationSchema={validationSchema}
+                initialValues={initialValues}
+                onSubmit={values => submit(values)}
+            >
+                {(formikHelpers) => (
+                    <View accessible={true} style={styles.wrapper}>
+                        {/* <View style={styles.uploadProfileImageWrapper}>
+                    <UploadProfileImage />
+                </View> */}
+                        <View style={styles.formWrapper}>
+                            <FormProfile {...formikHelpers} />
+                        </View>
+                        <View style={styles.buttonWrapper}>
+                            <Button
+                                onPress={() => {
+                                    const { isValid, errors } = formikHelpers;
+                                    if (!isValid) {
+                                        const firstErrorKey = Object.keys(errors)[0];
+                                        Alert.alert('', errors[firstErrorKey]);
+                                    } else {
+                                        formikHelpers.handleSubmit();
+                                    }
+                                }}
+                                accessibilityLabel="המשך לשלב הבא"
+                                buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
+                                icon={
+                                    <Icon
+                                        name="arrow-back"
+                                        size={30}
+                                        color={Theme.white}
+                                    />
                                 }
-                            }}
-                            accessibilityLabel="המשך לשלב הבא"
-                            buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
-                            icon={
-                                <Icon
-                                    name="arrow-back"
-                                    size={30}
-                                    color={Theme.white}
-                                />
-                            }
-                        />
+                            />
 
+                        </View>
                     </View>
-                </View>
-            )}
-        </Formik>
+                )}
+            </Formik>
+        </ScrollView>
     );
 }
 
