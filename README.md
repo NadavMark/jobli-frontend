@@ -32,8 +32,21 @@ when expo local server is up and available in `http://localhost:19002/` you will
 
 ## Build APK file for Android
 
-- You will need to connect the app to `https://expo.dev/`
+### pre requisite
 
-- Run command `npm run build:android` 
+the build of apk file made in the expo servers so you will need to connect your local environment to account in expo website.
+
+- create account in `https://expo.dev/`
+
+- run commnad `npm run expo:login` 
+
+
+### Build
+
+- run command `npm run build:android` 
 
 this command will trigger a build in the `https://expo.dev/` website and when it's done you will be able to download the apk file from `https://expo.dev/` (when the build is succeeded you will get specific link to the build in your account).
+
+### Publish
+
+Upload the file to Google Play Store console.

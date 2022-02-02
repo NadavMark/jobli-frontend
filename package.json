@@ -8,6 +8,7 @@
     "start:android": "expo run:android",
     "build:android": "expo build:android -t apk",
     "start:web": "expo run:web",
+    "expo:login": "expo login",
     "test": "jest"
   },
   "dependencies": {
