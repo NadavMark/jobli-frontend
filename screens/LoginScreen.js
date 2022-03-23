@@ -12,8 +12,6 @@ export default function LoginScreen({ navigation }) {
 
     async function navigateToNextScreen() {
         AsyncStorage.getItem(StorageKey.SKIP_PROFILE_WIZARD_KEY).then((value) => {
-
-            // console.log('value: ', value, typeof value)
             if (value) {
                 navigation.replace('JobsList');
             } else {
@@ -22,22 +20,25 @@ export default function LoginScreen({ navigation }) {
         });
     }
 
-    const hubCallback = async ({ payload: { event, data } }) => {
+    const hubCallback = ({ payload: { event, data } }) => {
         setLoader(false);
         switch (event) {
             case 'signIn':
-                await storeUserDetails();
-                setLoader(true);
-                setTimeout(() => {
-                    navigateToNextScreen();
-                }, 1000)
+                storeUserDetails().then(() => {
+                    setLoader(true);
+                    setTimeout(() => {
+                        navigateToNextScreen();
+                    }, 1000)
+                });
                 break;
             case 'signOut':
+                navigation.replace('Login');
                 break;
             case 'signIn_failure':
             case 'cognitoHostedUI_failure':
                 console.log('Sign in failure', data);
                 Alert.alert('שגיאת התחברות', 'משהו קרה, נסה שנית');
+                navigation.replace('Login');
                 break;
         }
     }
@@ -56,7 +57,6 @@ export default function LoginScreen({ navigation }) {
             </View>
         );
     }
-
     return (
         <View style={styles.container}>
             <Image style={styles.imageStyle} resizeMode="contain" source={require('./../assets/images/JobliLogo.png')} />

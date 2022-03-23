@@ -7,7 +7,8 @@ import SkillsQuestionsScreen from './screens/SkillsQuestionsScreen';
 import ChooseUserTypeScreen from './screens/ChooseUserTypeScreen';
 import { useFonts, Rubik_400Regular } from '@expo-google-fonts/rubik';
 import JobliLoader from './components/JobliLoader';
-import { StyleSheet, I18nManager } from 'react-native';
+import { StyleSheet, I18nManager, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
@@ -23,6 +24,7 @@ import CreateProfileEmployer, { CreateProfileEmployerScreenName, CreateProfileEm
 import PostJobWizard, { PostJobWizardScreenName, PostJobWizardScreenOptions } from "./screens/post-job-wizard/post-job-wizard";
 import SummaryScreen from "./screens/SummaryScreen";
 import LoginScreen from "./screens/LoginScreen";
+import { signOut } from './services/auth.service';
 
 const Stack = createStackNavigator();
 
@@ -68,6 +70,8 @@ Amplify.configure({
     scope: ["phone", "email", "profile", "openid", "aws.cognito.signin.user.admin"],
     redirectSignIn: redirectUrl,
     responseType: "code",
+    logout_uri: redirectUrl + 'Login',
+    redirectSignOut: redirectUrl + 'Login',
   },
 });
 
@@ -78,13 +82,38 @@ function App() {
   let [fontsLoaded] = useFonts({
     Rubik_400Regular,
   });
+
   if (!fontsLoaded) {
     return <JobliLoader />
   } else return (
     <NavigationContainer theme={navTheme}>
       <Stack.Navigator initialRouteName="Login">
         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
-        <Stack.Screen name="JobsList" component={JobsListScreen} options={{ title: 'הצעות עבודה' }} />
+        <Stack.Screen name="JobsList" component={JobsListScreen} options={{ title: 'הצעות עבודה', headerRight: () => (
+          <Icon
+          name='log-out-outline'
+          type='ionicon'
+          color={Theme.textColor}
+          style={{ marginLeft: 10, marginRight: 10 }}
+          size={28}
+          onPress={() => Alert.alert(
+            "ניתוק משתמש",
+            "האם לנתק את המשתמש?",
+            [
+              {
+                accessibilityLabel: "לא, הישאר מחובר", 
+                text: "לא, הישאר מחובר"
+              },
+              {
+                accessibilityLabel: "כן, רוצה להתנתק", 
+                text: "כן, רוצה להתנתק",
+                onPress: () => {signOut()}
+              }
+            ]
+          )}
+          accessibilityLabel="ניתוק משתמש"
+        />
+        )}} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'התחברות', headerShown: false }} />
         <Stack.Screen name={CreateProfileSeekerScreenName} options={CreateProfileSeekerScreenOptions} component={CreateProfileSeeker} />
         <Stack.Screen name={CreateProfileEmployerScreenName} options={CreateProfileEmployerScreenOptions} component={CreateProfileEmployer} />
