@@ -67,7 +67,7 @@ export default SkillsSummary = ({navigation, route}) => {
     try{
       // console.log('answers: ', answers)
       await post('/api/seeker/answers', answers);
-      navigation.replace('Summary');
+      navigation.push('Summary');
     } catch (e) {
       console.log(e)
     }

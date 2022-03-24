@@ -3,7 +3,8 @@ import { userTokenId } from './auth.service';
 import { post } from './api.service';
 
 export const UserType = {
-  JOB_SEEKER: 'job_seeker'
+  JOB_SEEKER: 'job_seeker',
+  EMPLOYER: 'employer'
 }
 
 export async function getUserType(userType) {

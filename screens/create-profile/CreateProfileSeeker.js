@@ -9,6 +9,7 @@ import { put } from '../../services/api.service';
 import useAxios from '../../hooks/axios.hook';
 
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const validationSchema = yup.object().shape({
     email: yup
@@ -92,6 +93,7 @@ const FormProfile = ({ handleChange, handleBlur, values }) => {
 export default function CreateProfileSeeker({ navigation }) {
     const [visible, setVisible] = React.useState(false);
     const [submitLoading, setLoader] = React.useState(false);
+    const [initialValues, setInitialValues] = React.useState(null);
 
     const { response, loading, error } = useAxios({
         method: 'get',
@@ -99,46 +101,44 @@ export default function CreateProfileSeeker({ navigation }) {
     });
 
     React.useEffect(() => {
-        if (response && response.full_name) {
-            navigation.replace('AboutMeProfile');
+        if (response) {
+            const values = {
+                full_name: response.full_name,
+                birth_year: new Date(response.birth_date).getFullYear().toString(),
+                birth_month: (new Date(response.birth_date).getMonth() + 1).toString(),
+                birth_day: new Date(response.birth_date).getDate().toString(),
+                address: response.address,
+                email: response.email,
+            }
+            setInitialValues(values);
+        } else if (response === undefined) {
+            setInitialValues({
+                full_name: '',
+                birth_year: '',
+                birth_month: '',
+                birth_day: '',
+                address: '',
+                email: '',
+            });
         }
     }, [response])
 
     function submit(values) {
         setLoader(true);
         put('/api/seeker/profile', values).then(async res => {
-            navigation.navigate('AboutMeProfile');
+            navigation.push('AboutMeProfile');
+            setLoader(false);
         })
     }
 
-    const initialValues = {
-        full_name: '',
-        birth_year: '',
-        birth_month: '',
-        birth_day: '',
-        address: '',
-        email: '',
-    }
-
-    // TODO: for edit mode
-
-    // if (response) {
-    //     Object.assign(initialValues, {
-    //         full_name: response.full_name,
-    //         birth_year: new Date(response.birth_date).getFullYear().toString(),
-    //         birth_month: (new Date(response.birth_date).getMonth() + 1).toString(),
-    //         birth_day: new Date(response.birth_date).getDate().toString(),
-    //         address: response.address,
-    //         email: response.email,
-    //     });
-    // }
-
-    if (submitLoading || loading) {
+    if (submitLoading || loading || !initialValues) {
         return (
             <View style={{
-                flex: 1, justifyContent: "center"
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center"
             }}>
-                <ActivityIndicator size="large" />
+                <Text style={{ fontSize: 16, padding: 5 }}>טוען...</Text>
             </View>
         );
     }
@@ -153,8 +153,8 @@ export default function CreateProfileSeeker({ navigation }) {
                 {(formikHelpers) => (
                     <View accessible={true} style={styles.wrapper}>
                         {/* <View style={styles.uploadProfileImageWrapper}>
-                    <UploadProfileImage />
-                </View> */}
+                            <UploadProfileImage />
+                        </View> */}
                         <View style={styles.formWrapper}>
 
                             <FormProfile {...formikHelpers} />
@@ -173,7 +173,7 @@ export default function CreateProfileSeeker({ navigation }) {
                                     }
                                 }}
                                 accessibilityLabel="המשך לשלב הבא"
-                                buttonStyle={{ backgroundColor: Theme.c3, borderRadius: 64, width: 64, height: 64 }}
+                                buttonStyle={styles.button}
                                 icon={
                                     <Icon
                                         name="arrow-back"
@@ -194,7 +194,7 @@ export default function CreateProfileSeeker({ navigation }) {
                                 onPress={formikHelpers.handleSubmit}
                                 accessibilityLabel="בואו נתחיל"
                                 title="בואו נתחיל"
-                                buttonStyle={{ backgroundColor: Theme.c3 }}
+                                buttonStyle={{backgroundColor: Theme.c3}}
                             />
                         </Overlay>
                     </View>
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: Theme.white,
+        height: screenHeight - 60
     },
     formWrapper: {
         flex: 4,
@@ -220,6 +221,15 @@ const styles = StyleSheet.create({
     buttonWrapper: {
         flex: 1,
         paddingBottom: 30,
+        position: 'absolute',
+        right: 20,
+        bottom: 20
+    },
+    button: {
+        backgroundColor: Theme.c3,
+        borderRadius: 64,
+        width: 64,
+        height: 64,
     },
     uploadProfileImageWrapper: {
         height: 126,
