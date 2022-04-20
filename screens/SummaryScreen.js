@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { get } from "../services/api.service";
 import Theme from "./../theme";
-import { StorageKey } from '../constants';
+import { languagesList, StorageKey } from '../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
   container: { margin: 5, fontSize: 20, color: "red" },
   header: { fontSize: 25, textAlign: "left" },
   text: { fontSize: 16, padding: 5 },
+  text2: { fontSize: 16, fontWeight: 'bold', padding: 5 },
   subTitle: { fontSize: 16, backgroundColor: Theme.c2, padding: 5 },
   buttonContainer: {
     justifyContent: "center",
@@ -26,6 +27,19 @@ const styles = StyleSheet.create({
   },
 });
 
+function TextRow({title, text}) {
+  if (!text) {
+    return null;
+  }
+
+  return (
+    <Text accessibilityLabel={`${title} ${text}`}>
+      <Text style={styles.text2}>{title}:</Text>
+      <Text style={styles.text}>{text}</Text>
+    </Text>
+  );
+}
+
 export default function SummaryScreen({ navigation }) {
   const [userSummary, setUserSummary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,7 +48,6 @@ export default function SummaryScreen({ navigation }) {
     try {
       const res = await get("/api/seeker/summary");
       setUserSummary(res.data);
-      // console.log("summary: ", res.data);
     } catch (e) {
       console.log(e);
     }
@@ -65,25 +78,39 @@ export default function SummaryScreen({ navigation }) {
     );
 
   const showUserSummary = () => {
-    if (userSummary) {
+    if (userSummary && userSummary.profile) {
+      const { profile } = userSummary;
+      const { 
+        birth_date,
+        address,
+        email,
+        about_me,
+        job_ambitions,
+        hobbies,
+        languages
+       } = profile;
+
       return (
         <>
           {/* <Text style={styles.text}>{userSummary.profile.full_name}</Text> */}
-          {userSummary.profile.birth_date && <Text style={styles.text}>{new Date(userSummary.profile.birth_date).toLocaleString()}</Text>}
-          <Text style={styles.text}>{userSummary.profile.address}</Text>
-          <Text style={styles.text}>{userSummary.profile.email}</Text>
-          {userSummary?.profile?.about_me && <Text style={styles.text}>{userSummary.profile.about_me}</Text>}
-          {userSummary?.profile?.job_ambitions && <Text style={styles.text}>{userSummary.profile.job_ambitions}</Text>}
-          {userSummary?.profile?.hobbies && <Text style={styles.text}>{userSummary.profile.hobbies}</Text>}
+          <TextRow title="תאריך לידה" text={new Date(birth_date).toLocaleString()}/>
+          <TextRow title="כתובת מגורים" text={address}/>
+          <TextRow title="דואר אלקטרוני" text={email}/>
+          <TextRow title="קצת עליי" text={about_me}/>
+          <TextRow title="מה אני מחפש במקום העבודה" text={job_ambitions}/>
+          <TextRow title="תחביבים שלי" text={hobbies}/>
 
           <Text style={styles.header}>שפות</Text>
           <FlatList
-            data={userSummary.profile.languages}
-            renderItem={({ item }) => (
-              <Text style={styles.text} key={item}>
-                {item}
-              </Text>
-            )}
+            data={languages}
+            renderItem={({ item }) => {
+              const languageObj = languagesList.find(lang => lang.id === item);
+              return (
+                <Text style={styles.text} key={languageObj.id}>
+                  {languageObj.name}
+                </Text>
+              )
+            }}
           />
           {/* <Text style={styles.header}>נסיון</Text>
           {showUserExperienceList()} */}
@@ -110,10 +137,12 @@ export default function SummaryScreen({ navigation }) {
               color="white"
               size={30}
               onPress={() => {
-                navigation.replace("JobsList");
-                AsyncStorage.setItem(StorageKey.SKIP_PROFILE_WIZARD_KEY, '1').then(() => {
-                  // console.log('save: ', StorageKey.SKIP_PROFILE_WIZARD_KEY)
+                navigation.reset({
+                  routes: [
+                    { name: 'JobsList' }
+                  ]
                 });
+                AsyncStorage.setItem(StorageKey.SKIP_PROFILE_WIZARD_KEY, '1')
               }}
             />
           </View>

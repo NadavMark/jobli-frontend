@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Text, View, TextInput, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { Text, View, TextInput, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { Formik } from "formik";
 import { Icon, Button } from "react-native-elements";
 import * as yup from "yup";
 import Theme from "../theme";
 import { put, get } from "../services/api.service";
-import useAxios from "../hooks/axios.hook";
+
+const screenHeight = Dimensions.get('window').height;
 
 const validationSchema = yup.object().shape({
   about_me: yup.string(),
@@ -71,17 +72,6 @@ const FormAboutMe = ({ handleChange, handleBlur, values }) => {
 export default function AboutMeProfileScreen({ navigation }) {
   const [submitLoading, setLoader] = React.useState(false);
 
-  const { response, loading, error } = useAxios({
-    method: "get",
-    url: "/api/seeker/profile",
-  });
-
-  React.useEffect(() => {
-    if (response && (response.about_me || response.job_ambitions || response.hobbies)) {
-      navigation.replace("AddLanguage");
-    }
-  }, [response]);
-
   function submit(values) {
     setLoader(true);
     get("/api/seeker/profile", values).then(async ({ data }) => {
@@ -96,8 +86,8 @@ export default function AboutMeProfileScreen({ navigation }) {
 
       put("/api/seeker/profile", { ...values, ...results })
         .then(async (res) => {
+          navigation.push("AddLanguage");
           setLoader(false);
-          navigation.replace("AddLanguage");
         })
         .catch((error) => console.log(">>>", error));
     });
@@ -109,15 +99,14 @@ export default function AboutMeProfileScreen({ navigation }) {
     hobbies: "",
   };
 
-  if (submitLoading || loading) {
+  if (submitLoading) {
     return (
-      <View
-        style={{
+      <View style={{
           flex: 1,
           justifyContent: "center",
-        }}
-      >
-        <ActivityIndicator size="large" />
+          alignItems: "center"
+      }}>
+          <Text style={{ fontSize: 16, padding: 5 }}>טוען...</Text>
       </View>
     );
   }
@@ -133,7 +122,7 @@ export default function AboutMeProfileScreen({ navigation }) {
               <View>
                 <FormAboutMe {...formikHelpers} />
               </View>
-              <View>
+              <View style={styles.buttonWrapper}>
                 <Button
                   onPress={formikHelpers.handleSubmit}
                   accessibilityLabel="המשך לשלב הבא"
@@ -152,7 +141,7 @@ export default function AboutMeProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#FFF",
-    height: "100%",
+    height: screenHeight
   },
   textLabel: {
     fontSize: 22,
@@ -174,15 +163,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#d6ccdb",
   },
+  buttonWrapper: {
+    justifyContent: "center",
+    alignItems: "flex-end",
+    marginHorizontal: 20,
+    marginTop: 20
+  },
   buttonCircle: {
     width: 60,
     height: 60,
     backgroundColor: "#28527A",
     borderRadius: 60,
     justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 20,
-    left: 20,
+    alignItems: "center"
   },
 });

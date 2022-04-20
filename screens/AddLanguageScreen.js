@@ -2,38 +2,8 @@ import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import MultiSelect from "react-native-multiple-select";
 import Icon from "react-native-vector-icons/Ionicons";
+import { languagesList } from "../constants";
 import { put } from "../services/api.service";
-
-const items = [
-  {
-    id: "hebrew",
-    name: "עברית",
-  },
-  {
-    id: "arabic",
-    name: "ערבית",
-  },
-  {
-    id: "english",
-    name: "אנגלית",
-  },
-  {
-    id: "russian",
-    name: "רוסית",
-  },
-  {
-    id: "french",
-    name: "צרפתית",
-  },
-  {
-    id: "spanish",
-    name: "ספרדית",
-  },
-  {
-    id: "torkuis",
-    name: "טורקית",
-  },
-];
 
 const styles = StyleSheet.create({
   buttonCircle: {
@@ -45,13 +15,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     bottom: 20,
-    left: 20,
+    right: 20,
   },
 });
 
 export default function AddLanguageScreen({ navigation }) {
   const [selectedItems, setSelectedItems] = useState([]);
-  const multiSelectRef = useRef();
+    const [submitLoading, setLoader] = React.useState(false);
+    const multiSelectRef = useRef();
 
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
@@ -59,19 +30,33 @@ export default function AddLanguageScreen({ navigation }) {
 
   const onApply = async (selectedItems) => {
     try {
-      // console.log(selectedItems);
+      setLoader(true);
       await put("/api/seeker/languages", selectedItems);
-      navigation.replace("SkillsQuestions");
+      navigation.push("SkillsQuestions");
+      setLoader(false);
     } catch (e) {
       console.log(e);
     }
   };
 
+
+  if (submitLoading) {
+    return (
+        <View style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+        }}>
+            <Text style={{ fontSize: 16, padding: 5 }}>טוען...</Text>
+        </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1, marginTop: 20 }}>
       <Text style={{ fontSize: 20 }}>הוסף שפה</Text>
       <MultiSelect
-        items={items}
+        items={languagesList}
         uniqueKey="id"
         ref={(component) => {
           multiSelectRef.current = component;
@@ -92,7 +77,12 @@ export default function AddLanguageScreen({ navigation }) {
         searchInputStyle={{ color: "#2E2E2E", fontSize: 25 }}
         submitButtonColor="#28527A"
         submitButtonText="הוסף"
+        hideTags={true}
       />
+
+      <View>
+        <Text>{multiSelectRef && multiSelectRef.current && multiSelectRef.current.getSelectedItemsExt(selectedItems)}</Text>
+      </View>
 
       <View style={styles.buttonCircle}>
         <Icon

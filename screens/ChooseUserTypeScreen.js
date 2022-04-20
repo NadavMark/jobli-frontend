@@ -11,17 +11,20 @@ export default function ChooseUserTypeScreen({ navigation }) {
     const [loading, setLoader] = React.useState(true);
 
     function navigateUserByType(userType) {
+        setLoader(true);
         post('/api/users/type', { user_type: userType }).then(() => {
             if (userType === 'job_seeker') {
-                navigation.navigate('יצירת פרופיל מחפש עבודה');
+                navigation.replace('יצירת פרופיל מחפש עבודה');
             } else if (userType === 'employer') {
-                navigation.navigate('יצירת פרופיל מעסיק');
+                navigation.replace('יצירת פרופיל מעסיק');
             }
+            setLoader(false);
         });
     }
 
     React.useEffect(() => {
         isJobSeeker().then((isJobSeekerUser) => {
+            setLoader(false);
             if (isJobSeekerUser) {
                 navigation.replace('יצירת פרופיל מחפש עבודה');
             } else {
