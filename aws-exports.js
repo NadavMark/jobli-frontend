@@ -10,5 +10,7 @@ const awsmobile = {
     "domain": "joblimain.auth.eu-west-1.amazoncognito.com",
  }
 };
+
+// cognito user pool id is: JobliMainAuthUsersPool3CE8BEDA-q4pUq6XzdHYB
  
 export default awsmobile;

@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "50397949-ed6d-400e-8144-9c118a2da0dc",
+		"name": "Jobli",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add job",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"job_name\": \"Misra\",\n    \"job_description\": \"Misra Description\",\n    \"job_employee_count\": 1,\n    \"job_scope\": \"full\",\n    \"job_salary\": 5000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://kfs2hqzgu6.execute-api.us-east-1.amazonaws.com/prod/api/employers/7a8bd5a4-84de-4bd6-a60f-95886b4477f0/jobs",
+					"protocol": "https",
+					"host": [
+						"kfs2hqzgu6",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"api",
+						"employers",
+						"7a8bd5a4-84de-4bd6-a60f-95886b4477f0",
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create employer profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"business_address\": {\"full_address\": \"Moshe Dayan 11, tel aviv\"}, \"business_name\": \"Aroma\", \"business_website\": \"https://www.aroma.co.il\", \"description\": \"Coffee shop\", \"employer_email\": \"\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://kfs2hqzgu6.execute-api.us-east-1.amazonaws.com/prod/api/employers",
+					"protocol": "https",
+					"host": [
+						"kfs2hqzgu6",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"api",
+						"employers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJraWQiOiJtOXQ1bE5PckpQZGNYXC8wRmd4eW5lOWNaZlwva2d4ZWRYeE5qbHBvTEJtYmM9IiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoieWdyem9vdFctSlh1MThTZGFpMFJpZyIsInN1YiI6ImE0ZjFkZjU4LTVhNTItNDJjZS1hOTk2LTE2MTQ1ODQyYWVlZCIsImNvZ25pdG86Z3JvdXBzIjpbImV1LXdlc3QtMV9vY24wOGRVUnlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfb2NuMDhkVVJ5IiwiY29nbml0bzp1c2VybmFtZSI6Ikdvb2dsZV8xMTU1NTE3OTgyOTA2MTAxODE1NjUiLCJub25jZSI6IkRoN3c2Q1lyb25kX1NhMzQzN3B4Y0RJdTRZcWdFU1c4S0ktN2pZVG5oUmd3eGFvdkFaRG1WY0xBQUs1T1lpSHp5YXZjZW9rOHNJNTNMcEFuc1VZLVdKcmEyYUJZa3FQa1hXdkxRNEVJMl9yTEo4SUVoUWMxY2hoOEZLUnpMZHNtZHI1WHZpY0hzWVloeFdjcUJYTWFYN1RMUE1PUXFvazNwTGVLbjNTNElTSSIsIm9yaWdpbl9qdGkiOiIyZDM3YWQzNS1hNDQyLTQ3NjMtYmViMS0xNzk3MWUyMWFjZTMiLCJhdWQiOiIxZWxxcDNnbjVmcmVoZWhoZ2xuOHM4MTcwMCIsImlkZW50aXRpZXMiOlt7InVzZXJJZCI6IjExNTU1MTc5ODI5MDYxMDE4MTU2NSIsInByb3ZpZGVyTmFtZSI6Ikdvb2dsZSIsInByb3ZpZGVyVHlwZSI6Ikdvb2dsZSIsImlzc3VlciI6bnVsbCwicHJpbWFyeSI6InRydWUiLCJkYXRlQ3JlYXRlZCI6IjE2MzM5NTQ1MzM0MzkifV0sInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjM0NDkyMTE0LCJleHAiOjE2MzQ0OTU3MTQsImlhdCI6MTYzNDQ5MjExNCwianRpIjoiMTI3ZWE3ZmEtZDQwOS00YWRjLTkzMjMtNjM4NjE3MTc1MjlhIiwiZW1haWwiOiJyeW5ybjhAZ21haWwuY29tIn0.TPsNJgAURY2yWpQxrvjeZb2NjwFE6Tk-gXAR-UZTl5sIYC2EUmXMttPL8D02dYO7Kr41eEr2yXDP3mEB61Hnfgl3nq2d9xHgy3yV-NjjgI_G-ANglaFHvG-wJgY6GJvSKHr3J435VhgNoLILT-OiCqhp9MQmB4SV24wOHqqixZV3py2ux_IlinAQyDgrRLFwQte6r7vkM35Ifmia_tYoCJp3PGY__p1dmQFTm6UmFLLSGuj8qrVbH0n9Zyqey6bKiu7qcG9rZzmn7XuyKD-DqRR7-nD6x32zsGPugqgFuE9VSqqedXyqL1i6uxwJvsgGu2Rg2piQ6odPoE0esLckEQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"full_name\": \"אסלי ישראלי\",\n    \"birth_year\": 1987,\n    \"birth_month\": 3,\n    \"birth_day\": 18,\n    \"address\": \"חיפה, זלמן שניאור 24 דירה 2\",\n    \"email\": \"rynrn8@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://kwqwc5uojf.execute-api.eu-west-1.amazonaws.com/prod/api/seeker/profile",
+					"protocol": "https",
+					"host": [
+						"kwqwc5uojf",
+						"execute-api",
+						"eu-west-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"api",
+						"seeker",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJraWQiOiJtOXQ1bE5PckpQZGNYXC8wRmd4eW5lOWNaZlwva2d4ZWRYeE5qbHBvTEJtYmM9IiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoiVVFHb1NiZkFOal9LS3JzWjNWdGZOUSIsInN1YiI6ImE0ZjFkZjU4LTVhNTItNDJjZS1hOTk2LTE2MTQ1ODQyYWVlZCIsImNvZ25pdG86Z3JvdXBzIjpbImV1LXdlc3QtMV9vY24wOGRVUnlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfb2NuMDhkVVJ5IiwiY29nbml0bzp1c2VybmFtZSI6Ikdvb2dsZV8xMTU1NTE3OTgyOTA2MTAxODE1NjUiLCJub25jZSI6IlRPZ01VLVVmN0xtLTRvS0dyWUtfUXhsTkZUYjIwa2RqTFRTcWM4ZUNGbHhocnJwc0wxX2ZiZWZkdTcwd1lCRDNIalU5ZmhKX2wxUTVRTWJKODNhNk1XaHZGc3h6cjVpSzV0N1dhVERpeml4aFdXSVNIT2dPTVI4RXJFWGNyLTBBeE1uWVE3Q0FGWDJzd05URk1iaTdCRk1kcWhJUGZvUmVuM2RUZ2lWSWlEZyIsIm9yaWdpbl9qdGkiOiJhODhlMDZhYy03ZDc2LTQ0YzgtYTFjZS04M2ViZDM2NTFiODMiLCJhdWQiOiIxZWxxcDNnbjVmcmVoZWhoZ2xuOHM4MTcwMCIsImlkZW50aXRpZXMiOlt7InVzZXJJZCI6IjExNTU1MTc5ODI5MDYxMDE4MTU2NSIsInByb3ZpZGVyTmFtZSI6Ikdvb2dsZSIsInByb3ZpZGVyVHlwZSI6Ikdvb2dsZSIsImlzc3VlciI6bnVsbCwicHJpbWFyeSI6InRydWUiLCJkYXRlQ3JlYXRlZCI6IjE2MzM5NTQ1MzM0MzkifV0sInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjM0NDk5NDEyLCJleHAiOjE2MzQ1MDMwMTIsImlhdCI6MTYzNDQ5OTQxMiwianRpIjoiYTVkOTFhNDItYWUzNC00ZWY1LWEwZGQtMThiMGNiMDhhMjI1IiwiZW1haWwiOiJyeW5ybjhAZ21haWwuY29tIn0.pdKsH_p9zLGg2xEzBGnKFkATa4vTQjiBmFV8fNKcn36hMXOg0u0M-PEjwGYnKkBQKC8dtzAO5QEr9Og58ctzK2RtjQ33hW2EDdRsUfpVtmk-WOwpkW1x3-PfWgoPBwu35o-wEpHf2EO9N5izguyEvxPqtoOeHhLDTwGoyR-O8zcQSknUKMFV9lzvC4lGxO8biOGskL1Th3sJwrRxUtapXycKxLxiIsA4yiEqHp2qF0Mb-G9_Wr3X_R_Pdz6JcDeHtnbwL7XWS373AkiVWnxOLs6JJhBlFzvr3p4qUG62v0F8VomggIIfnz8RDvNFC-ywOBL0y5xn-dSkp-toFZvuMw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://kwqwc5uojf.execute-api.eu-west-1.amazonaws.com/prod/api/seeker/profile",
+					"protocol": "https",
+					"host": [
+						"kwqwc5uojf",
+						"execute-api",
+						"eu-west-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"api",
+						"seeker",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJraWQiOiJHVFNvY2JLNFwvSzI1Wko3MWVhZ1hcL0dLenNTOGp5XC9qQXVnWEFSSnZaaHVZPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiaVFfbkNXN2Q5X1MyaVd3eFlZbE5lQSIsInN1YiI6ImYyZmRmMTFmLTQyNzYtNGJiZS05YzU0LTNiNTAxZTkwNzg1MyIsImNvZ25pdG86Z3JvdXBzIjpbImV1LXdlc3QtMV9iZUw3b1FjdEdfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfYmVMN29RY3RHIiwiY29nbml0bzp1c2VybmFtZSI6Ikdvb2dsZV8xMTU1NTE3OTgyOTA2MTAxODE1NjUiLCJvcmlnaW5fanRpIjoiYjcyNDZhMzgtYmM0NC00YjM0LTgwZTUtOTE1MDQzZTgwYTQ0IiwiYXVkIjoiNGYwZGZwMzZxNzVmdnRlZGVwNHJtODU5ZGoiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMTU1NTE3OTgyOTA2MTAxODE1NjUiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNjQzNzk2NDYzMDExIn1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTY0MzgzNzg2MCwiZXhwIjoxNjQzODQxNDYwLCJjdXN0b206dXNlcl90eXBlIjoiam9iX3NlZWtlciIsImlhdCI6MTY0MzgzNzg2MCwianRpIjoiYTRmMjA2ZGYtMjY2Ny00ZDAwLWJlNTYtNjZjMDgyOTcxYjRmIiwiZW1haWwiOiJyeW5ybjhAZ21haWwuY29tIn0.PzgTR_7meyAQFyTf_yB0i2PgInqRfyNCjOtxGy3wWihWtoc5vVFvRhNHyTZUSYno3-hQrYXK3rLZk0br81HVcHxcZFCLTuCBs2UU4PPKjbAQhU7Mf81NiYOs0Dj_pws3Y5Fw5Bk8jHTNMQgWZy-vcgcQvFy2p6dmC-y0LocnIh3HjTvsAvKv_SQIFn4m5PKZsgTux_E_CSiLO-ZnpATokOrxTH0NQiDE2qvDf5SPZjmwDH4E3henJMEf5KabOnVCzUIIsQRibPNv8oNazp-8IJ5Xw9L43E2l67x9iQw9VH6T4gmoT-Tp-u_H6-K8VYt-D7WZSW6a9Nrq1-JMSZBPbQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://h4she6zb80.execute-api.eu-west-1.amazonaws.com/prod/api/seeker",
+					"protocol": "https",
+					"host": [
+						"h4she6zb80",
+						"execute-api",
+						"eu-west-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"api",
+						"seeker"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

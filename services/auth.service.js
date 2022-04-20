@@ -21,6 +21,10 @@ export async function facebookSignIn() {
   return Auth.federatedSignIn({ provider: 'Facebook' });
 }
 
+export async function signOut() {
+  return Auth.signOut();
+}
+
 async function storeUserId() {
   Auth.currentAuthenticatedUser()
   .then(async (userData) => {
@@ -32,7 +36,6 @@ async function storeUserId() {
 function storeUserToken() {
   Auth.currentAuthenticatedUser()
   .then(async (userData) => {
-    // console.log(userData.signInUserSession.idToken.jwtToken)
     userTokenId = userData.signInUserSession.idToken.jwtToken
   })
   .catch(() => console.log('Not signed in'));
